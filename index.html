@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#064E3B">
+    
+    <!-- Meta Tags para Redes Sociais -->
+    <meta name="description" content="Tudo para o homem do campo e para o seu pet! Rações, ferramentas, moda country e muito mais.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sua Logo AgroPet | Tradição no Campo e Cuidado com seu Pet">
+    <meta property="og:description" content="A maior variedade para o produtor rural e animais de estimação. Compre online com total segurança.">
+    <meta property="og:site_name" content="Sua Logo AgroPet">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Preconnects & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <title>Sua Logo - Sistema Premium</title>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Inter', 'sans-serif'],
+                        montserrat: ['Montserrat', 'sans-serif']
+                    },
+                    colors: {
+                        brand: { 
+                            // Tons de Verde solicitados
+                            50: '#f0fdf4', 
+                            100: '#dcfce7', 
+                            500: '#16a34a', // Verde Principal
+                            600: '#15803d', // Verde Escuro (Hover)
+                            900: '#064e3b', // Verde Muito Escuro (Fundos)
+                            yellow: '#facc15' // Amarelo Secundário
+                        }
+                    },
+                    boxShadow: {
+                        'hard': '4px 4px 0px 0px rgba(6, 78, 59, 1)',
+                        'hard-sm': '2px 2px 0px 0px rgba(6, 78, 59, 1)',
+                        'hard-hover': '0px 0px 0px 0px rgba(6, 78, 59, 1)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS E RESET CSS
+           ========================================================================== */
+        :root {
+            --primary: #16a34a;        
+            --secondary: #facc15;      
+            --bg-body: #F8FAFC;        
+            --text-main: #0F172A;
+            --border-light: #E2E8F0;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-body); color: var(--text-main); -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #E2E8F0; }
+        ::-webkit-scrollbar-thumb { background: #16a34a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #15803d; }
+
+        /* ==========================================================================
+           2. ANIMAÇÕES E COMPONENTES DE UI
+           ========================================================================== */
+        #preloader { position: fixed; inset: 0; background: #064e3b; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        
+        .view { display: none; opacity: 0; }
+        .view.active { display: block; animation: fadeInView 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes fadeInView { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .stagger-item { opacity: 0; transform: translateY(20px); animation: staggerFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes staggerFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .slider-container { position: relative; width: 100%; height: 100%; }
+        .slide-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 7s ease-out; transform: scale(1); }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease-in-out; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 1.5rem sm:padding: 3rem; color: white; overflow: hidden; }
+        .slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(6,78,59,0.95) 0%, rgba(6,78,59,0.2) 100%); z-index: 1; }
+        .slide.active { opacity: 1; z-index: 2; }
+        .slide.active .slide-bg { transform: scale(1.08); }
+        .slide-content { position: relative; z-index: 3; max-width: 100%; sm:max-width: 600px; border-left: 6px solid var(--secondary); padding-left: 1rem; sm:padding-left: 1.5rem; animation: slideInLeft 0.8s ease backwards; }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+
+        .cat-pill { 
+            flex: 0 0 auto; background: #FFF; border: 2px solid var(--border-light); 
+            padding: 0.6rem 1.2rem; border-radius: 12px; font-weight: 700; font-size: 0.75rem; 
+            color: #475569; cursor: pointer; transition: var(--transition); 
+            display:flex; align-items:center; gap:6px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        @media (min-width: 640px) { .cat-pill { padding: 0.7rem 1.5rem; font-size: 0.85rem; gap:8px; } }
+        .cat-pill:hover { border-color: var(--text-main); color: var(--text-main); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
+        .cat-pill.active { background: var(--text-main); color: var(--secondary); border-color: var(--text-main); box-shadow: var(--shadow-hard-sm); transform: translateY(-2px); }
+
+        .header-glass { background: rgba(6, 78, 59, 0.95) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom-width: 2px !important; padding-top: 0.5rem !important; padding-bottom: 0.5rem !important;}
+
+        .marquee-track { display: flex; gap: 1.5rem; width: max-content; animation: scroll-left 40s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 0.75rem)); } }
+
+        @keyframes bounce-sm { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        .bounce-active { animation: bounce-sm 0.3s ease 2; }
+
+        .btn-physical { transition: transform 0.1s, box-shadow 0.1s; }
+        .btn-physical:active { transform: translate(2px, 2px) !important; box-shadow: var(--shadow-hard-hover) !important; }
+
+        .form-input { width: 100%; padding: 0.9rem 1.2rem; border: 2px solid var(--border-light); border-radius: 10px; font-size: 0.95rem; font-weight: 600; background: #FFF; transition: var(--transition); color: var(--text-main); }
+        .form-input:focus { border-color: var(--primary); outline: none; box-shadow: var(--shadow-hard-sm); transform: translateY(-1px); }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(6, 78, 59, 0.85); z-index: 3000; justify-content: center; align-items: center; padding: 1rem; backdrop-filter: blur(6px); opacity: 0; transition: opacity 0.3s; overflow-y: auto; }
+        .modal-overlay.show { opacity: 1; }
+
+        #toast { visibility: hidden; min-width: 280px; max-width: 90vw; background-color: #10B981; color: #FFF; text-align: center; border-radius: 12px; padding: 16px 24px; position: fixed; z-index: 4000; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(30px); font-weight: 800; font-size: 0.9rem; text-transform: uppercase; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border: 2px solid #064E3B; box-shadow: var(--shadow-hard); letter-spacing: 0.5px; break-words: break-word; }
+        #toast.show { visibility: visible; transform: translateX(-50%) translateY(0); opacity: 1; }
+        #toast.error { background-color: #EF4444; border-color: #7F1D1D; }
+
+    </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-900">
+
+    <!-- PRELOADER COM LOGO -->
+    <div id="preloader">
+        <div class="text-brand-yellow text-5xl sm:text-7xl mb-6 animate-pulse"><i class="fas fa-tractor"></i></div>
+        <h1 class="font-montserrat font-black text-white text-3xl sm:text-4xl mb-8 tracking-tighter uppercase">Sua Logo <span class="text-brand-yellow">Agro</span></h1>
+        <div class="w-48 sm:w-56 h-3 bg-brand-900 rounded-full overflow-hidden border-2 border-brand-600">
+            <div class="h-full bg-brand-yellow w-1/2 animate-[pulse_1s_infinite] rounded-full"></div>
+        </div>
+        <p class="text-brand-100 mt-4 font-bold uppercase tracking-widest text-[10px] sm:text-xs text-center px-4">Preparando o campo...</p>
+    </div>
+
+    <!-- LOADER GLOBAL -->
+    <div id="global-loader" class="hidden fixed inset-0 bg-white/90 backdrop-blur-md z-[9999] flex-col items-center justify-center p-4 text-center">
+        <i class="fas fa-circle-notch fa-spin text-4xl sm:text-5xl text-brand-500 mb-4"></i>
+        <p class="font-bold text-slate-800 uppercase tracking-widest text-xs sm:text-sm">Carregando...</p>
+    </div>
+
+    <!-- BARRA DE AVISO PÚBLICA -->
+    <div id="public-topbar" class="bg-brand-500 text-brand-yellow text-[9px] sm:text-[10px] md:text-xs font-black py-2.5 px-2 text-center uppercase tracking-widest border-b-2 border-brand-900 relative z-[102] transition-colors break-words" style="background-color: var(--primary); color: var(--secondary);">
+        <span id="ui-top-bar-text" class="animate-pulse flex items-center justify-center gap-1 sm:gap-2 flex-wrap"><i class="fas fa-leaf"></i> O MELHOR PARA O HOMEM DO CAMPO E SEU PET! <i class="fas fa-paw"></i></span>
+    </div>
+
+    <!-- CABEÇALHO PÚBLICO -->
+    <header id="public-header" class="bg-brand-900 border-b-4 border-brand-500 sticky top-0 z-[100] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 py-3 md:py-4 flex flex-col md:flex-row items-center gap-3 sm:gap-4 transition-all duration-300" id="header-container">
+            
+            <div class="flex justify-between items-center w-full md:w-auto shrink-0">
+                <div class="cursor-pointer transform hover:scale-105 transition duration-300 flex items-center gap-2" onclick="navigate('vitrine')" id="ui-main-logo">
+                    <!-- Logo Fallback Inicial (Pode ser sobrescrita pelo JS se houver imagem configurada) -->
+                    <i class="fas fa-tractor text-brand-yellow text-2xl sm:text-3xl"></i>
+                    <div class="flex flex-col">
+                        <span class="font-montserrat font-black text-white text-lg sm:text-xl leading-none uppercase tracking-tighter">Sua Logo</span>
+                        <span class="text-brand-yellow text-[9px] sm:text-[10px] font-bold uppercase tracking-widest leading-none">Agro & Pet</span>
+                    </div>
+                </div>
+                <div class="md:hidden relative cursor-pointer p-2 flex items-center btn-physical" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart text-white text-lg sm:text-xl"></i>
+                    <span class="cart-badge absolute -top-1 -right-1 bg-brand-yellow text-brand-900 text-[9px] sm:text-[10px] font-black w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center rounded-full border-2 border-brand-900 hidden">0</span>
+                </div>
+            </div>
+            
+            <div class="w-full relative flex-1 max-w-3xl mx-auto group">
+                <input type="text" id="inputBusca" class="w-full bg-brand-900/50 border-2 border-brand-600 text-white rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-12 pr-4 text-xs sm:text-sm font-bold outline-none focus:border-brand-yellow focus:bg-brand-900 transition-all shadow-inner placeholder-brand-100" placeholder="Buscar rações, ferramentas, medicamentos..." onkeyup="filtrarVitrine()">
+                <i class="fas fa-search absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-brand-100 group-focus-within:text-brand-yellow transition-colors text-sm sm:text-base"></i>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-4 shrink-0">
+                <button onclick="toggleCart()" id="desktop-cart-btn" class="btn-physical bg-brand-500 text-white border-2 border-brand-900 hover:bg-brand-600 px-4 lg:px-5 py-2 lg:py-2.5 rounded-xl font-black text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-2 relative shadow-hard">
+                    <i class="fas fa-shopping-cart"></i> Carrinho
+                    <span class="cart-badge absolute -top-2 -right-2 bg-brand-yellow text-brand-900 border-2 border-brand-900 text-[10px] lg:text-[11px] font-black w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center rounded-full hidden">0</span>
+                </button>
+                <button onclick="navigate('perfil')" class="btn-physical bg-white text-brand-900 border-2 border-brand-900 hover:bg-slate-100 px-4 lg:px-5 py-2 lg:py-2.5 rounded-xl font-black text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-2 shadow-hard">
+                    <i class="fas fa-user-circle text-base lg:text-lg"></i> Entrar
+                </button>
+                <button onclick="navigate('login')" class="btn-physical bg-brand-900 text-brand-yellow border-2 border-brand-yellow hover:bg-brand-800 px-4 lg:px-5 py-2 lg:py-2.5 rounded-xl font-black text-[10px] lg:text-xs uppercase tracking-widest transition-colors flex items-center gap-2 shadow-hard animate-pulse">
+                    <i class="fas fa-lock"></i> ERP
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGAÇÃO MOBILE INFERIOR -->
+    <div id="public-bottom-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-brand-900 border-t-4 border-brand-500 z-[90] flex justify-around items-center h-[65px] sm:h-[70px] pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.2)]">
+        <button class="flex flex-col items-center gap-1 text-brand-100 hover:text-brand-yellow transition w-14 sm:w-16" id="nav-btn-vitrine" onclick="navigate('vitrine')">
+            <i class="fas fa-store text-lg sm:text-xl mb-0.5 sm:mb-1"></i><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest">Loja</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-brand-100 hover:text-brand-yellow transition w-14 sm:w-16 relative" onclick="toggleCart()">
+            <i class="fas fa-shopping-bag text-lg sm:text-xl mb-0.5 sm:mb-1"></i><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest">Sacola</span>
+            <span class="cart-badge absolute top-0 right-1 sm:right-2 bg-brand-yellow border border-brand-900 text-brand-900 text-[8px] sm:text-[9px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center rounded-full hidden">0</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-brand-100 hover:text-white transition w-14 sm:w-16" id="nav-btn-perfil" onclick="navigate('perfil')">
+            <i class="fas fa-user text-lg sm:text-xl mb-0.5 sm:mb-1"></i><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest">Conta</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-brand-500 hover:text-white transition w-14 sm:w-16" onclick="navigate('login')">
+            <i class="fas fa-lock text-lg sm:text-xl mb-0.5 sm:mb-1"></i><span class="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest">Admin</span>
+        </button>
+    </div>
+
+    <!-- SIDEBAR DO CARRINHO -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-[400px] lg:w-[450px] bg-slate-50 border-l-0 md:border-l-[6px] border-brand-500 shadow-2xl z-[1000] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-4 sm:p-6 border-b-2 border-slate-200 bg-brand-900 flex justify-between items-center">
+            <h3 class="font-montserrat font-black text-xl sm:text-2xl uppercase text-white tracking-tight"><i class="fas fa-shopping-basket text-brand-yellow mr-2"></i> Sua Sacola</h3>
+            <button onclick="toggleCart()" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl border-2 border-brand-700 bg-brand-800 flex items-center justify-center text-white hover:bg-brand-500 hover:border-brand-500 transition-colors btn-physical"><i class="fas fa-times text-base sm:text-lg"></i></button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-100"></div>
+        
+        <div class="p-4 sm:p-6 bg-white border-t-2 border-slate-200 shadow-[0_-10px_20px_rgba(0,0,0,0.03)] z-10 pb-20 md:pb-6">
+            <div class="flex justify-between items-end mb-4 sm:mb-5 flex-wrap gap-2">
+                <span class="text-slate-500 uppercase text-[10px] sm:text-xs font-black tracking-widest">Total a Pagar</span>
+                <span id="cart-total-val" class="font-montserrat font-black text-2xl sm:text-3xl md:text-4xl text-brand-500 break-all">R$ 0,00</span>
+            </div>
+            <button onclick="navigate('checkout'); toggleCart();" id="checkout-btn" class="btn-physical w-full bg-[#10B981] border-2 border-[#064E3B] text-white font-black py-3 sm:py-4 rounded-xl shadow-hard hover:bg-[#059669] transition-colors disabled:opacity-50 text-xs sm:text-sm uppercase tracking-widest flex items-center justify-center gap-2 break-words" disabled>
+                Finalizar Compra <i class="fas fa-arrow-right"></i>
+            </button>
+            <p class="text-center text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase mt-3"><i class="fas fa-lock"></i> Compra 100% Segura</p>
+        </div>
+    </div>
+    <div id="cart-overlay" class="fixed inset-0 bg-brand-900/70 backdrop-blur-sm z-[900] hidden opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
+
+    <!-- MAIN PÚBLICO -->
+    <main class="w-full flex-grow" id="public-main">
+        
+        <!-- VITRINE (LOJA PÚBLICA) -->
+        <section id="view-vitrine" class="view active pb-16">
+            
+            <!-- CARROSSEL -->
+            <div class="max-w-7xl mx-auto px-3 sm:px-4 mt-4 sm:mt-6 mb-6 sm:mb-8">
+                <div class="slider-container rounded-2xl border-4 border-brand-900 overflow-hidden h-[180px] sm:h-[300px] md:h-[450px] bg-brand-900 shadow-hard" id="hero-slider"></div>
+            </div>
+
+            <!-- TRUST BADGES -->
+            <div class="max-w-7xl mx-auto px-4 mb-8 sm:mb-10 hidden md:block">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white border-2 border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm">
+                    <div class="flex items-center gap-3 sm:gap-4 justify-center text-left">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-50 text-brand-500 flex items-center justify-center text-lg sm:text-xl shrink-0"><i class="fas fa-tractor"></i></div>
+                        <div><h4 class="font-black text-slate-800 text-[10px] sm:text-xs uppercase tracking-wider">Tudo pro Campo</h4><p class="text-slate-500 text-[10px] sm:text-xs font-medium">As melhores marcas</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 sm:gap-4 justify-center text-left sm:border-l-2 sm:border-slate-100 sm:pl-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-brand-yellow/20 text-yellow-600 flex items-center justify-center text-lg sm:text-xl shrink-0"><i class="fas fa-paw"></i></div>
+                        <div><h4 class="font-black text-slate-800 text-[10px] sm:text-xs uppercase tracking-wider">Cuidado Pet</h4><p class="text-slate-500 text-[10px] sm:text-xs font-medium">Rações e Medicamentos</p></div>
+                    </div>
+                    <div class="flex items-center gap-3 sm:gap-4 justify-center text-left sm:border-l-2 sm:border-slate-100 sm:pl-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-lg sm:text-xl shrink-0"><i class="fas fa-truck-loading"></i></div>
+                        <div><h4 class="font-black text-slate-800 text-[10px] sm:text-xs uppercase tracking-wider">Retirada Fácil</h4><p class="text-slate-500 text-[10px] sm:text-xs font-medium">Compre e pegue na loja</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FILTROS COM EMOJIS AGRO/PET -->
+            <div class="max-w-7xl mx-auto px-2 sm:px-4 mb-6 sm:mb-8 sticky top-[65px] sm:top-[70px] md:top-[88px] z-40 bg-slate-100 py-2 border-b border-slate-200/50 backdrop-blur-md">
+                <div class="flex overflow-x-auto gap-2 sm:gap-3 pb-2 pt-1 no-scrollbar px-2 sm:px-0" id="category-filters">
+                    <button class="cat-pill active btn-physical" onclick="filtrarPorCategoria('Todos', this)">Todos</button>
+                    <button class="cat-pill btn-physical" onclick="filtrarPorCategoria('Pet Shop', this)">🐶 Pet Shop</button>
+                    <button class="cat-pill btn-physical" onclick="filtrarPorCategoria('Agropecuária', this)">🚜 Agropecuária</button>
+                    <button class="cat-pill btn-physical" onclick="filtrarPorCategoria('Moda Country', this)">👢 Moda Country</button>
+                    <button class="cat-pill btn-physical" onclick="filtrarPorCategoria('Equinos', this)">🐴 Equinos</button>
+                    <button class="cat-pill btn-physical" onclick="filtrarPorCategoria('Jardinagem', this)">🌱 Jardinagem</button>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-end mb-6 sm:mb-8 border-b-2 border-slate-200 pb-3">
+                    <div class="w-full break-words">
+                        <h2 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight"><i class="fas fa-star text-brand-500 mr-2"></i> Destaques</h2>
+                        <p class="text-xs sm:text-sm font-bold text-slate-500 mt-1">Os produtos mais procurados do campo e da cidade.</p>
+                    </div>
+                </div>
+                
+                <div id="grid-produtos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"></div>
+                
+                <div id="msg-sem-produto" style="display:none; text-align:center; padding: 3rem 1rem sm:padding: 5rem 2rem; background: #FFF; border: 2px dashed var(--border-light); border-radius: 16px; margin-top: 1rem sm:margin-top: 2rem;">
+                    <i class="fas fa-box-open text-4xl sm:text-5xl text-slate-300 mb-3 sm:mb-4"></i>
+                    <h3 class="font-black text-slate-700 uppercase text-base sm:text-lg break-words">Poxa, não encontramos nada!</h3>
+                    <p class="text-slate-500 font-medium text-xs sm:text-sm mt-2 break-words">Tente buscar por outro termo ou limpe os filtros.</p>
+                    <button class="mt-4 bg-brand-900 text-brand-yellow px-5 sm:px-6 py-2 rounded-lg font-bold text-[10px] sm:text-xs uppercase" onclick="filtrarPorCategoria('Todos', document.querySelector('.cat-pill'))">Limpar Filtros</button>
+                </div>
+            </div>
+
+            <!-- SOBRE NÓS E PROMO -->
+            <section class="max-w-7xl mx-auto px-4 mt-12 sm:mt-20 mb-12 sm:mb-16">
+                <div class="bg-brand-900 text-white rounded-3xl border-4 border-brand-800 p-6 sm:p-8 md:p-16 text-center relative shadow-hard overflow-hidden group">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 mix-blend-overlay"></div>
+                    <i class="fas fa-tractor absolute -right-4 -bottom-4 sm:-right-10 sm:-bottom-10 text-7xl sm:text-9xl text-brand-500 opacity-30 transform group-hover:scale-110 group-hover:-translate-x-4 transition duration-700"></i>
+                    <i class="fas fa-paw absolute left-4 top-4 sm:left-10 sm:top-10 text-4xl sm:text-5xl text-brand-yellow opacity-20 animate-pulse"></i>
+                    <h3 id="ui-about-title" class="font-montserrat text-2xl sm:text-3xl md:text-5xl font-black mb-3 sm:mb-4 uppercase text-brand-yellow relative z-10 tracking-tighter break-words">TRADIÇÃO E QUALIDADE</h3>
+                    <p id="ui-about-text1" class="text-base sm:text-lg md:text-2xl text-slate-200 mb-3 sm:mb-4 max-w-3xl mx-auto font-bold relative z-10 leading-tight break-words">O parceiro certo para o homem do campo e seu pet.</p>
+                    <p id="ui-about-text2" class="text-sm sm:text-base md:text-lg text-brand-100 max-w-2xl mx-auto font-medium relative z-10 break-words">Encontre as melhores marcas em um só lugar. Compre online e retire com facilidade na nossa loja.</p>
+                    <button class="mt-6 sm:mt-8 btn-physical bg-brand-500 text-white border-2 border-brand-900 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-black uppercase tracking-widest relative z-10 shadow-hard text-xs sm:text-sm" onclick="window.scrollTo(0,0)">
+                        Ver Ofertas Agora
+                    </button>
+                </div>
+            </section>
+
+            <!-- LOJAS -->
+            <section class="max-w-7xl mx-auto px-4 mb-12 sm:mb-20">
+                <h2 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight mb-6 sm:mb-8 border-b-2 border-slate-200 pb-3 break-words"><i class="fas fa-map-marker-alt text-brand-500 mr-2"></i> Onde nos Encontrar</h2>
+                <div id="scroll-lojas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
+            </section>
+
+            <!-- DEPOIMENTOS ANIMADOS (MARQUEE) -->
+            <section class="w-full bg-white border-y-2 border-slate-200 py-8 sm:py-12 mb-8 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 mb-6 sm:mb-8 text-center">
+                    <h2 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight break-words"><i class="fas fa-comments text-brand-500 mr-2"></i> Palavra do Amigo</h2>
+                    <p class="text-xs sm:text-sm font-bold text-slate-500 mt-2 break-words">O que nossos clientes dizem sobre nós.</p>
+                </div>
+                <div class="relative w-full overflow-hidden pb-4">
+                    <div class="absolute top-0 left-0 w-10 sm:w-20 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+                    <div class="absolute top-0 right-0 w-10 sm:w-20 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+                    <div class="marquee-track" id="track-depoimentos"></div>
+                </div>
+            </section>
+        </section>
+
+        <!-- DETALHE DO PRODUTO -->
+        <section id="view-produto" class="view max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+            <button class="btn-physical bg-white border-2 border-brand-900 text-brand-900 font-bold px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-xs uppercase tracking-widest hover:bg-brand-900 hover:text-brand-yellow transition mb-4 sm:mb-6 flex items-center gap-2 shadow-hard-sm w-max" onclick="navigate('vitrine')">
+                <i class="fas fa-arrow-left"></i> Voltar à Loja
+            </button>
+            <div id="container-produto" class="bg-white p-5 sm:p-6 md:p-10 rounded-3xl shadow-sm border-2 border-slate-200 flex flex-col md:flex-row gap-6 sm:gap-8 md:gap-12 relative overflow-hidden">
+                <!-- Injetado via JS -->
+            </div>
+        </section>
+
+        <!-- CHECKOUT -->
+        <section id="view-checkout" class="view max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+            <button class="btn-physical bg-white border-2 border-brand-900 text-brand-900 font-bold px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-xs uppercase tracking-widest hover:bg-brand-900 hover:text-brand-yellow transition mb-4 sm:mb-6 flex items-center gap-2 shadow-hard-sm w-max" onclick="navigate('vitrine')">
+                <i class="fas fa-arrow-left"></i> Voltar à Loja
+            </button>
+            
+            <div class="mb-6 sm:mb-8">
+                <h2 class="font-montserrat text-2xl sm:text-3xl font-black text-slate-900 uppercase tracking-tight break-words">Finalizar Pedido</h2>
+                <p class="text-xs sm:text-sm font-bold text-slate-500 break-words">Quase lá! Escolha como quer pagar e retirar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <div class="bg-white border-2 border-slate-200 rounded-3xl p-5 sm:p-6 md:p-8 shadow-sm h-max">
+                    <h3 class="font-montserrat text-lg sm:text-xl font-black uppercase text-slate-900 mb-5 sm:mb-6 border-b-2 border-slate-100 pb-3 flex items-center gap-2 break-words"><i class="fas fa-clipboard-check text-brand-500 text-xl sm:text-2xl"></i> Dados da Retirada</h3>
+                    <div class="space-y-4 sm:space-y-5">
+                        <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-bold text-slate-600">Onde deseja retirar? *</label><select id="checkout-loja" class="form-input"></select></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-bold text-slate-600">Data Retirada *</label><input type="date" id="checkout-data" class="form-input"></div>
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-bold text-slate-600">Hora Prevista *</label><input type="time" id="checkout-hora" class="form-input"></div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="text-[10px] sm:text-xs font-bold text-slate-600">Método de Pagamento (Na Loja) *</label>
+                            <select id="checkout-pgto" class="form-input bg-slate-50">
+                                <option value="PIX">Pix (Mais Rápido)</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Cartão de Débito">Cartão de Débito</option>
+                                <option value="Dinheiro">Dinheiro Físico</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-900 text-white border-4 border-brand-800 rounded-3xl p-5 sm:p-6 md:p-8 shadow-hard h-max relative overflow-hidden">
+                    <div class="absolute -right-5 -bottom-5 sm:-right-10 sm:-bottom-10 opacity-10"><i class="fas fa-receipt text-7xl sm:text-9xl"></i></div>
+                    <h3 class="font-montserrat text-lg sm:text-xl font-black uppercase text-brand-yellow mb-5 sm:mb-6 border-b-2 border-brand-700 pb-3 relative z-10 break-words">Resumo do Pedido</h3>
+                    <div id="checkout-items-list" class="space-y-3 sm:space-y-4 mb-5 sm:mb-6 max-h-48 sm:max-h-56 overflow-y-auto custom-scrollbar relative z-10 pr-1 sm:pr-2"></div>
+                    <div class="border-t-2 border-brand-700 pt-4 sm:pt-5 mb-6 sm:mb-8 relative z-10">
+                        <div class="flex justify-between items-end flex-wrap gap-2">
+                            <span class="text-brand-100 font-bold uppercase text-[10px] sm:text-xs tracking-widest">Total Geral</span>
+                            <span id="checkout-total-val" class="font-montserrat text-3xl sm:text-4xl font-black text-brand-yellow break-all">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <button class="btn-physical w-full bg-[#25D366] border-2 border-[#1E9E4D] text-white font-black py-4 sm:py-5 rounded-xl hover:bg-[#20bd5a] transition-colors uppercase tracking-widest text-[10px] sm:text-sm shadow-hard flex items-center justify-center gap-2 sm:gap-3 relative z-10 break-words" onclick="finalizarPedido()">
+                        <i class="fab fa-whatsapp text-xl sm:text-2xl"></i> Enviar Pedido via WhatsApp
+                    </button>
+                    <p class="text-center text-[9px] sm:text-xs text-brand-100 font-medium mt-3 sm:mt-4 relative z-10">O pagamento será realizado no momento da retirada.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERFIL / LOGIN CLIENTE -->
+        <section id="view-perfil" class="view max-w-md mx-auto px-4 py-12 sm:py-16">
+            <div class="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 md:p-10 text-center shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-500 to-brand-yellow"></div>
+                
+                <div id="perfil-step-1">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50 rounded-full flex items-center justify-center text-brand-500 text-3xl sm:text-4xl mx-auto mb-4 sm:mb-6 border-4 border-slate-100"><i class="fas fa-user-cowboy"></i></div>
+                    <h2 class="font-montserrat text-2xl sm:text-3xl font-black text-slate-900 mb-2 uppercase tracking-tight break-words">Sua Conta</h2>
+                    <p class="text-xs sm:text-sm font-bold text-slate-500 mb-6 sm:mb-8 break-words">Identifique-se para agilizar suas compras.</p>
+                    <button class="btn-physical w-full bg-brand-900 text-brand-yellow font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-hard border-2 border-brand-900" onclick="document.getElementById('perfil-step-1').style.display='none'; document.getElementById('perfil-step-2').style.display='block';">Entrar ou Registrar-se</button>
+                </div>
+
+                <div id="perfil-step-2" style="display: none; text-align: left;">
+                    <h2 class="font-montserrat text-xl sm:text-2xl font-black text-slate-900 mb-4 sm:mb-6 uppercase border-b-2 border-slate-100 pb-2 break-words">Seus Dados</h2>
+                    <div class="form-group mb-3 sm:mb-4"><label class="text-[10px] sm:text-xs font-bold text-slate-600">Nome Completo *</label><input type="text" id="cli-nome" class="form-input" placeholder="Ex: João Produtor"></div>
+                    <div class="form-group mb-3 sm:mb-4"><label class="text-[10px] sm:text-xs font-bold text-slate-600">WhatsApp (DDD) *</label><input type="tel" id="cli-zap" class="form-input" placeholder="(84) 99999-9999"></div>
+                    <div class="form-group mb-6 sm:mb-8"><label class="text-[10px] sm:text-xs font-bold text-slate-600">E-mail (Opcional)</label><input type="email" id="cli-email" class="form-input" placeholder="seu@email.com"></div>
+                    <div class="flex flex-col gap-2 sm:gap-3">
+                        <button class="btn-physical w-full bg-brand-500 text-white font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-hard border-2 border-brand-600" onclick="salvarPerfil()">Salvar Perfil</button>
+                        <button class="w-full bg-transparent text-slate-500 font-bold py-2 sm:py-3 rounded-xl uppercase text-[10px] sm:text-xs hover:bg-slate-50 transition" onclick="document.getElementById('perfil-step-2').style.display='none'; document.getElementById('perfil-step-1').style.display='block';">Voltar</button>
+                    </div>
+                </div>
+
+                <div id="perfil-logged-state" style="display: none;">
+                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4">
+                        <img id="avatar-logged" src="" class="w-full h-full rounded-full object-cover border-4 border-slate-100 shadow-sm">
+                        <div class="absolute bottom-0 right-0 bg-brand-500 w-5 h-5 sm:w-6 sm:h-6 rounded-full border-4 border-white"></div>
+                    </div>
+                    <h2 id="logged-name" class="font-montserrat text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight break-words">Nome</h2>
+                    <p id="logged-zap" class="text-slate-500 font-bold mb-6 sm:mb-8 text-xs sm:text-sm bg-slate-50 py-1 px-3 rounded-full inline-block mt-1 sm:mt-2 border border-slate-200"></p>
+                    
+                    <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 sm:p-4 mb-6 sm:mb-8 text-left">
+                        <h4 class="text-emerald-800 font-black text-[10px] sm:text-xs uppercase tracking-widest mb-1"><i class="fas fa-check-circle"></i> Conta Pronta</h4>
+                        <p class="text-emerald-600 text-[10px] sm:text-xs font-medium">Você já pode realizar pedidos rapidamente.</p>
+                    </div>
+
+                    <button class="btn-physical w-full bg-white text-red-500 border-2 border-slate-200 font-black py-2.5 sm:py-3 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-sm hover:bg-red-50 hover:border-red-200 transition break-words" onclick="deslogarPerfil()"><i class="fas fa-sign-out-alt mr-2"></i> Sair da Conta</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN GESTÃO (ADMIN) -->
+        <section id="view-login" class="view max-w-sm mx-auto px-4 py-16 sm:py-20">
+            <div class="bg-brand-900 rounded-3xl border-4 border-brand-500 p-6 sm:p-8 md:p-10 text-center shadow-hard relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10"></div>
+                <i class="fas fa-tractor text-5xl sm:text-6xl text-brand-yellow mb-4 sm:mb-6 relative z-10 drop-shadow-[0_0_15px_rgba(250,204,21,0.3)]"></i>
+                <h2 class="font-montserrat text-xl sm:text-2xl font-black text-white mb-6 sm:mb-8 uppercase tracking-widest relative z-10 break-words">Acesso Restrito</h2>
+                <div class="form-group text-left relative z-10 mb-3 sm:mb-4"><label class="text-brand-100 text-[10px] sm:text-xs font-bold">Usuário Master</label><input type="text" id="login-user" value="admin" class="form-input bg-brand-800 border-brand-700 text-white focus:border-brand-yellow"></div>
+                <div class="form-group text-left relative z-10 mb-6 sm:mb-8"><label class="text-brand-100 text-[10px] sm:text-xs font-bold">Senha de Acesso</label><input type="password" id="login-pass" value="123" class="form-input bg-brand-800 border-brand-700 text-white focus:border-brand-yellow"></div>
+                <button class="btn-physical w-full bg-brand-500 text-white border-2 border-brand-600 font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-xs sm:text-sm shadow-hard relative z-10 break-words" onclick="efetuarLogin()">Acessar ERP</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ (PÚBLICO) -->
+    <footer id="public-footer" class="bg-brand-900 border-t-[8px] border-brand-500 pt-12 sm:pt-16 pb-20 md:pb-8 mt-8 sm:mt-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12 relative z-10">
+            
+            <div>
+                <div class="mb-4 sm:mb-6 bg-white/5 inline-block p-2 rounded-xl max-w-[200px]" id="footer-logo-container">
+                    <!-- Gerado Dinamicamente -->
+                </div>
+                <p class="text-xs sm:text-sm text-brand-100 font-medium mb-4 sm:mb-6 leading-relaxed break-words">A sua loja completa de Agropecuária, Pet Shop, Ferramentas e Moda Country. A melhor experiência de compra!</p>
+                <div class="flex gap-3 sm:gap-4">
+                    <a href="#" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-800 flex items-center justify-center text-white hover:bg-brand-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-800 flex items-center justify-center text-white hover:bg-[#3b5998] transition"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-black mb-4 sm:mb-6 uppercase tracking-widest text-xs sm:text-sm border-b-2 border-brand-700 pb-2 inline-block">Navegação</h4>
+                <ul class="space-y-2 sm:space-y-3 text-xs sm:text-sm font-bold text-brand-100">
+                    <li><a href="#" onclick="navigate('vitrine'); return false;" class="hover:text-brand-yellow transition flex items-center gap-2"><i class="fas fa-chevron-right text-brand-500 text-[9px] sm:text-[10px]"></i> Catálogo de Produtos</a></li>
+                    <li><a href="#" onclick="toggleCart(); return false;" class="hover:text-brand-yellow transition flex items-center gap-2"><i class="fas fa-chevron-right text-brand-500 text-[9px] sm:text-[10px]"></i> Ver Sacola</a></li>
+                    <li><a href="#" onclick="navigate('perfil'); return false;" class="hover:text-brand-yellow transition flex items-center gap-2"><i class="fas fa-chevron-right text-brand-500 text-[9px] sm:text-[10px]"></i> Minha Conta</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-black mb-4 sm:mb-6 uppercase tracking-widest text-xs sm:text-sm border-b-2 border-brand-700 pb-2 inline-block">Atendimento</h4>
+                <ul class="space-y-4 sm:space-y-5 text-xs sm:text-sm font-bold text-brand-100">
+                    <li class="flex items-start gap-3 sm:gap-4">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded bg-brand-800 flex items-center justify-center text-brand-500 shrink-0"><i class="fas fa-map-marker-alt text-[10px] sm:text-base"></i></div>
+                        <span class="leading-relaxed break-words">Sua Rua, 123<br>Centro - Sua Cidade/UF</span>
+                    </li>
+                    <li class="flex items-center gap-3 sm:gap-4">
+                        <div class="w-6 h-6 sm:w-8 sm:h-8 rounded bg-brand-800 flex items-center justify-center text-[#25D366] shrink-0"><i class="fab fa-whatsapp text-[10px] sm:text-base"></i></div>
+                        <a href="#" id="footer-whatsapp-link" target="_blank" class="hover:text-white transition break-words">Falar com Atendimento</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-black mb-4 sm:mb-6 uppercase tracking-widest text-xs sm:text-sm border-b-2 border-brand-700 pb-2 inline-block">Pagamento na Loja</h4>
+                <div class="flex flex-col gap-2 sm:gap-3">
+                    <div class="bg-brand-800 text-white py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border border-brand-700 flex items-center gap-3 sm:gap-4 font-bold text-[10px] sm:text-xs uppercase tracking-widest shadow-sm">
+                        <i class="fas fa-qrcode text-brand-yellow text-lg sm:text-xl shrink-0"></i> Pix Rápido
+                    </div>
+                    <div class="bg-brand-800 text-white py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl border border-brand-700 flex items-center gap-3 sm:gap-4 font-bold text-[10px] sm:text-xs uppercase tracking-widest shadow-sm">
+                        <i class="fas fa-credit-card text-brand-yellow text-lg sm:text-xl shrink-0"></i> Cartões Débito/Crédito
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 border-t border-brand-800 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 relative z-10">
+            <p class="text-[10px] sm:text-xs font-bold text-brand-100 uppercase tracking-widest text-center md:text-left break-words">© 2026 Sua Logo AgroPet. Todos os direitos reservados.</p>
+            <button id="btn-secret-admin" class="btn-physical bg-brand-500 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs uppercase tracking-widest hover:bg-brand-600 transition-colors flex items-center gap-2 border-2 border-brand-900 shadow-hard animate-pulse break-words">
+                <i class="fas fa-lock text-sm sm:text-lg"></i> Acesso ERP
+            </button>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         VIEW: ERP ADMINISTRATIVO (ISOLADO E BLINDADO)
+         ========================================================================== -->
+    <section id="view-admin" class="view" style="padding:0; margin:0; max-width:none;">
+        <header class="bg-brand-900 border-b-4 border-brand-500 px-3 sm:px-4 md:px-8 py-3 sm:py-4 flex justify-between items-center sticky top-0 z-50 shadow-hard">
+            <div class="font-montserrat font-black text-sm sm:text-lg md:text-xl uppercase tracking-widest text-white flex items-center gap-2 sm:gap-3 break-words">
+                <i class="fas fa-tractor text-brand-yellow text-lg sm:text-2xl shrink-0"></i> 
+                <span class="hidden sm:inline">Gestão ERP Agro</span><span class="sm:hidden">ERP</span>
+            </div>
+            <button class="btn-physical bg-transparent border-2 border-brand-600 text-brand-100 hover:bg-brand-500 hover:border-brand-500 hover:text-white px-3 sm:px-5 py-1.5 sm:py-2 rounded-lg font-bold text-[9px] sm:text-xs uppercase tracking-widest transition break-words" onclick="efetuarLogout()">Sair <span class="hidden sm:inline">do Sistema</span></button>
+        </header>
+
+        <div class="flex flex-col md:flex-row min-h-[calc(100vh-76px)]">
+            <!-- SIDEBAR ADMIN -->
+            <div class="w-full md:w-64 bg-slate-50 border-b-2 md:border-b-0 md:border-r-2 border-slate-200 flex overflow-x-auto md:flex-col p-2 sm:p-3 md:p-6 gap-1 sm:gap-2 shadow-sm sticky top-[60px] sm:top-[76px] z-40 no-scrollbar md:h-[calc(100vh-76px)]">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 hidden md:block pl-2">Menu Principal</p>
+                <button class="erp-nav-btn active flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-dashboard" onclick="abrirAbaAdmin('dashboard')"><i class="fas fa-chart-pie w-5 sm:w-6 text-center"></i> Visão Geral</button>
+                <button class="erp-nav-btn flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-pdv" onclick="abrirAbaAdmin('pdv')"><i class="fas fa-cash-register w-5 sm:w-6 text-center"></i> Caixa PDV</button>
+                <button class="erp-nav-btn flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-produtos" onclick="abrirAbaAdmin('produtos')"><i class="fas fa-box-open w-5 sm:w-6 text-center"></i> Estoque</button>
+                <button class="erp-nav-btn flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-lojas" onclick="abrirAbaAdmin('lojas')"><i class="fas fa-store-alt w-5 sm:w-6 text-center"></i> Lojas Físicas</button>
+                <button class="erp-nav-btn flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-depoimentos" onclick="abrirAbaAdmin('depoimentos')"><i class="fas fa-star w-5 sm:w-6 text-center"></i> Avaliações</button>
+                <button class="erp-nav-btn flex-shrink-0 md:flex-shrink rounded-xl font-bold text-xs sm:text-sm text-left px-3 sm:px-4 py-2 sm:py-3 text-slate-600 hover:bg-white hover:text-brand-500 hover:shadow-sm transition-all" id="tab-config" onclick="abrirAbaAdmin('config')"><i class="fas fa-cog w-5 sm:w-6 text-center"></i> Configurações</button>
+            </div>
+
+            <!-- CONTEÚDO ADMIN -->
+            <div class="flex-grow p-3 sm:p-4 md:p-8 bg-slate-100/50 overflow-hidden w-full">
+                
+                <!-- ABA DASHBOARD -->
+                <div id="aba-dashboard" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm">
+                    <div class="flex justify-between items-center mb-6 sm:mb-8 flex-wrap gap-3 sm:gap-4 stagger-item">
+                        <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 tracking-tight break-words">Painel de Controle</h3>
+                        <button class="btn-physical bg-blue-500 text-white font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl hover:bg-blue-600 shadow-hard-sm text-[10px] sm:text-xs uppercase tracking-widest flex items-center gap-2" onclick="syncDataFromCloud()"><i class="fas fa-cloud-download-alt"></i> <span class="hidden sm:inline">Sync</span> Nuvem</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
+                        <div class="bg-gradient-to-br from-brand-500 to-brand-700 text-white p-5 sm:p-8 rounded-2xl shadow-hard stagger-item relative overflow-hidden" style="animation-delay: 0.1s">
+                            <i class="fas fa-wallet absolute -right-4 -bottom-4 text-6xl sm:text-8xl opacity-10"></i>
+                            <h4 class="text-[10px] sm:text-xs font-black text-brand-100 uppercase tracking-widest mb-1 sm:mb-2 relative z-10 break-words">Faturamento Bruto</h4>
+                            <div id="kpi-receita" class="font-montserrat text-3xl sm:text-4xl md:text-5xl font-black relative z-10 tracking-tighter break-all">R$ 0,00</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-500 to-blue-700 text-white p-5 sm:p-8 rounded-2xl shadow-hard stagger-item relative overflow-hidden" style="animation-delay: 0.2s">
+                            <i class="fas fa-shopping-basket absolute -right-4 -bottom-4 text-6xl sm:text-8xl opacity-10"></i>
+                            <h4 class="text-[10px] sm:text-xs font-black text-blue-100 uppercase tracking-widest mb-1 sm:mb-2 relative z-10 break-words">Itens Vendidos</h4>
+                            <div id="kpi-itens" class="font-montserrat text-3xl sm:text-4xl md:text-5xl font-black relative z-10 tracking-tighter break-all">0</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-amber-500 to-amber-700 text-white p-5 sm:p-8 rounded-2xl shadow-hard stagger-item relative overflow-hidden" style="animation-delay: 0.3s">
+                            <i class="fas fa-boxes absolute -right-4 -bottom-4 text-6xl sm:text-8xl opacity-10"></i>
+                            <h4 class="text-[10px] sm:text-xs font-black text-amber-100 uppercase tracking-widest mb-1 sm:mb-2 relative z-10 break-words">Capital em Estoque</h4>
+                            <div id="kpi-custo-est" class="font-montserrat text-3xl sm:text-4xl md:text-5xl font-black relative z-10 tracking-tighter break-all">R$ 0,00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-red-50 border border-red-200 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-10 stagger-item shadow-sm" style="animation-delay: 0.4s">
+                        <h3 class="text-red-700 font-black uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2 text-xs sm:text-sm break-words"><i class="fas fa-exclamation-triangle fa-fade"></i> Alertas de Reposição</h3>
+                        <ul id="lista-alertas-estoque" class="space-y-2 text-[10px] sm:text-sm text-red-600 font-bold break-words"></ul>
+                    </div>
+
+                    <h3 class="font-black text-slate-800 uppercase tracking-widest text-[10px] sm:text-sm mb-3 sm:mb-4 stagger-item break-words" style="animation-delay: 0.5s">Últimas Vendas Registradas</h3>
+                    <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-sm stagger-item" style="animation-delay: 0.6s">
+                        <table class="w-full text-left border-collapse min-w-[400px]">
+                            <thead><tr class="bg-slate-50 border-b border-slate-200"><th class="p-3 sm:p-5 text-[9px] sm:text-xs font-black text-slate-500 uppercase tracking-widest">Data</th><th class="p-3 sm:p-5 text-[9px] sm:text-xs font-black text-slate-500 uppercase tracking-widest">Produto</th><th class="p-3 sm:p-5 text-[9px] sm:text-xs font-black text-slate-500 uppercase tracking-widest">Qtd</th><th class="p-3 sm:p-5 text-[9px] sm:text-xs font-black text-slate-500 uppercase tracking-widest">Total</th></tr></thead>
+                            <tbody id="tabela-vendas" class="text-[10px] sm:text-sm font-semibold text-slate-600 divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ABA: PDV -->
+                <div id="aba-pdv" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm" style="display:none;">
+                    <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 mb-6 sm:mb-8 tracking-tight break-words"><i class="fas fa-cash-register text-brand-500 mr-2 sm:mr-3"></i> Frente de Caixa</h3>
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-6 sm:mb-8">
+                        <input type="text" id="pdv-busca" class="form-input flex-1 shadow-inner bg-slate-50 text-xs sm:text-sm" placeholder="Código SKU ou Nome do produto..." onkeypress="if(event.key === 'Enter') buscarProdutoPDV()">
+                        <button class="btn-physical bg-brand-500 text-white font-black px-6 sm:px-8 py-3 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm shadow-hard border-2 border-brand-900" onclick="buscarProdutoPDV()">Lançar</button>
+                    </div>
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 mb-6 sm:mb-8 max-h-[250px] sm:max-h-[350px] overflow-y-auto overflow-x-auto shadow-inner">
+                        <table class="w-full text-left border-collapse min-w-[350px]">
+                            <thead class="sticky top-0 bg-slate-200 shadow-sm border-b border-slate-300"><tr><th class="p-3 sm:p-4 text-[9px] sm:text-xs font-black uppercase text-slate-600 tracking-widest">Produto</th><th class="p-3 sm:p-4 text-[9px] sm:text-xs font-black uppercase text-slate-600 tracking-widest">Qtd</th><th class="p-3 sm:p-4 text-[9px] sm:text-xs font-black uppercase text-slate-600 tracking-widest">Subtotal</th><th class="p-3 sm:p-4"></th></tr></thead>
+                            <tbody id="tabela-pdv-itens" class="text-[10px] sm:text-sm font-bold text-slate-700 divide-y divide-slate-200"></tbody>
+                        </table>
+                    </div>
+                    <div class="bg-brand-900 text-white p-5 sm:p-8 rounded-3xl shadow-hard border-4 border-brand-800 relative overflow-hidden">
+                        <i class="fas fa-shopping-basket absolute -right-5 -bottom-5 text-6xl sm:text-7xl opacity-10"></i>
+                        <div class="flex justify-between items-end mb-6 sm:mb-8 relative z-10 flex-wrap gap-2">
+                            <span class="font-black uppercase tracking-widest text-brand-100 text-[10px] sm:text-sm">Total a Pagar:</span>
+                            <span id="pdv-total-valor" class="font-montserrat text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-brand-yellow tracking-tighter break-all">R$ 0,00</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 relative z-10">
+                            <button class="btn-physical bg-slate-700 text-white font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm hover:bg-slate-600 transition break-words" onclick="limparPDV()">Cancelar</button>
+                            <button class="btn-physical bg-brand-500 text-white border-2 border-brand-600 font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm shadow-hard hover:bg-brand-600 transition break-words" onclick="finalizarVendaPDV()">Finalizar Venda</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ABA: PRODUTOS (ESTOQUE) -->
+                <div id="aba-produtos" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm" style="display:none;">
+                    <div class="flex justify-between items-center mb-6 sm:mb-8 flex-wrap gap-3 sm:gap-4">
+                        <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 tracking-tight break-words"><i class="fas fa-boxes text-brand-500 mr-2 sm:mr-3"></i> Controle de Estoque</h3>
+                        <div class="flex gap-2 sm:gap-3 flex-wrap">
+                            <button class="btn-physical bg-slate-200 text-slate-700 font-bold px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-xs uppercase tracking-widest shadow-sm hover:bg-slate-300" onclick="baixarRelatorioCSV()"><i class="fas fa-download mr-1"></i> CSV</button>
+                            <button class="btn-physical bg-brand-500 text-white border-2 border-brand-900 font-black px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-xs uppercase tracking-widest shadow-hard" onclick="abrirModalProduto()"><i class="fas fa-plus mr-1"></i> <span class="hidden sm:inline">Novo</span> Produto</button>
+                        </div>
+                    </div>
+
+                    <!-- Cadastro Rápido Expresso -->
+                    <div class="bg-gradient-to-r from-brand-50 to-white border-2 border-brand-100 p-4 sm:p-6 rounded-2xl sm:rounded-3xl mb-6 sm:mb-8 shadow-sm">
+                        <div class="w-full text-brand-900 font-black uppercase tracking-widest mb-3 sm:mb-4 text-[10px] sm:text-xs"><i class="fas fa-bolt text-brand-500"></i> Cadastro Rápido</div>
+                        <div class="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 items-stretch sm:items-end">
+                            <div class="flex-1 min-w-full sm:min-w-[150px] md:min-w-[200px]"><input type="text" id="exp-nome" class="form-input text-xs sm:text-sm" placeholder="Nome do Produto"></div>
+                            <div class="w-full sm:w-auto">
+                                <select id="exp-cat" class="form-input text-xs sm:text-sm">
+                                    <option value="Todos">Categoria...</option>
+                                    <option value="Pet Shop">Pet Shop</option>
+                                    <option value="Agropecuária">Agropecuária</option>
+                                    <option value="Moda Country">Moda Country</option>
+                                    <option value="Equinos">Equinos</option>
+                                    <option value="Jardinagem">Jardinagem</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 sm:flex sm:gap-3 w-full sm:w-auto">
+                                <div class="w-full sm:w-24 md:w-28"><input type="number" id="exp-preco" class="form-input text-xs sm:text-sm" placeholder="Preço (R$)"></div>
+                                <div class="w-full sm:w-20 md:w-24"><input type="number" id="exp-estoque" class="form-input text-xs sm:text-sm" placeholder="Qtd"></div>
+                            </div>
+                            <button class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow font-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl shadow-hard border-2 border-brand-900 uppercase text-[10px] sm:text-xs tracking-widest" onclick="cadastroExpresso()">Gravar</button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200 shadow-sm w-full">
+                        <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                            <thead class="bg-slate-50 border-b border-slate-200"><tr><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs">Produto</th><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs">SKU</th><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs">Venda</th><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs">Categoria</th><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs">Estoque</th><th class="p-3 sm:p-5 font-black uppercase text-slate-500 tracking-widest text-[9px] sm:text-xs text-right">Ações</th></tr></thead>
+                            <tbody id="tabela-estoque-admin" class="font-semibold text-slate-700 divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ABA: LOJAS -->
+                <div id="aba-lojas" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm" style="display:none;">
+                    <div class="flex justify-between items-center mb-6 sm:mb-8 flex-wrap gap-3">
+                        <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 tracking-tight break-words"><i class="fas fa-store text-brand-500 mr-2 sm:mr-3"></i> Unidades Físicas</h3>
+                        <button class="btn-physical bg-brand-500 text-white border-2 border-brand-900 font-black px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-xs uppercase tracking-widest shadow-hard" onclick="abrirModalLoja()"><i class="fas fa-plus"></i> <span class="hidden sm:inline">Nova</span> Loja</button>
+                    </div>
+                    <div id="lista-adm-lojas" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+                </div>
+
+                <!-- ABA: DEPOIMENTOS -->
+                <div id="aba-depoimentos" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm" style="display:none;">
+                    <div class="flex justify-between items-center mb-6 sm:mb-8 flex-wrap gap-3">
+                        <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 tracking-tight break-words"><i class="fas fa-star text-brand-yellow mr-2 sm:mr-3"></i> Avaliações</h3>
+                        <button class="btn-physical bg-brand-500 text-white border-2 border-brand-900 font-black px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-[9px] sm:text-xs uppercase tracking-widest shadow-hard" onclick="abrirModalDepoimento()"><i class="fas fa-plus"></i> Novo</button>
+                    </div>
+                    <div id="lista-adm-deps" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+                </div>
+
+                <!-- ABA: CONFIGURAÇÕES -->
+                <div id="aba-config" class="aba-conteudo bg-white rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 shadow-sm" style="display:none;">
+                    <h3 class="font-montserrat text-xl sm:text-2xl md:text-3xl font-black uppercase text-slate-800 mb-6 sm:mb-8 tracking-tight break-words"><i class="fas fa-cog text-slate-400 mr-2 sm:mr-3"></i> Sistema</h3>
+                    
+                    <div class="bg-slate-50 border-2 border-slate-200 p-5 sm:p-8 rounded-2xl sm:rounded-3xl mb-6 sm:mb-8 shadow-sm overflow-hidden">
+                        <h4 class="font-black text-slate-800 uppercase tracking-widest text-[10px] sm:text-sm mb-4 sm:mb-6 border-b-2 border-slate-200 pb-3 break-words"><i class="fas fa-paint-roller text-brand-500 mr-2"></i> Identidade & Integração</h4>
+                        
+                        <div class="form-group mb-4 sm:mb-5"><label class="text-[10px] sm:text-xs font-black break-words">URL API (Google Script / Nuvem)</label><input type="text" id="cfg-gas-url" class="form-input bg-white text-xs sm:text-sm"></div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black break-words">Nome Fantasia</label><input type="text" id="cfg-nome" class="form-input bg-white text-xs sm:text-sm"></div>
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black break-words">WhatsApp Pedidos (Apenas Números)</label><input type="tel" id="cfg-zap" class="form-input bg-white text-xs sm:text-sm"></div>
+                        </div>
+
+                        <!-- Editor de Cores -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-5 sm:mb-6">
+                            <div class="form-group mb-0">
+                                <label class="text-[10px] sm:text-xs font-black break-words">Cor Primária</label>
+                                <div class="flex items-center gap-2 sm:gap-3 bg-white border-2 border-slate-200 rounded-xl p-1.5 sm:p-2 pr-3 sm:pr-4 shadow-sm">
+                                    <input type="color" id="cfg-cor-pri" class="w-8 h-8 sm:w-12 sm:h-10 rounded border-none cursor-pointer p-0 bg-transparent shrink-0">
+                                    <span class="text-[9px] sm:text-xs font-bold text-slate-500 uppercase break-words leading-tight">Cabeçalhos / Botões</span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label class="text-[10px] sm:text-xs font-black break-words">Cor Secundária</label>
+                                <div class="flex items-center gap-2 sm:gap-3 bg-white border-2 border-slate-200 rounded-xl p-1.5 sm:p-2 pr-3 sm:pr-4 shadow-sm">
+                                    <input type="color" id="cfg-cor-sec" class="w-8 h-8 sm:w-12 sm:h-10 rounded border-none cursor-pointer p-0 bg-transparent shrink-0">
+                                    <span class="text-[9px] sm:text-xs font-bold text-slate-500 uppercase break-words leading-tight">Textos Logo / Ícones</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-6 sm:mb-8">
+                            <label class="text-[10px] sm:text-xs font-black break-words">Logotipo da Loja</label>
+                            <div class="flex flex-col md:flex-row items-start md:items-center gap-3 sm:gap-4">
+                                <div class="flex flex-col sm:flex-row flex-1 gap-2 sm:gap-3 w-full">
+                                    <input type="text" id="cfg-logo-b64" class="form-input flex-1 bg-white text-xs sm:text-sm" placeholder="URL da Logo ou faça upload...">
+                                    <label class="btn-physical w-full sm:w-auto bg-brand-900 text-white cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 shadow-hard rounded-xl font-black text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <i class="fas fa-upload"></i> Enviar
+                                        <input type="file" class="hidden" accept="image/*" onchange="processarImagem(this, 'preview-logo', 'cfg-logo-b64')">
+                                    </label>
+                                </div>
+                                <button class="btn-physical w-full md:w-auto bg-white text-red-500 border-2 border-red-200 hover:bg-red-50 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs uppercase tracking-widest shadow-sm flex items-center justify-center gap-2" onclick="removerLogo()"><i class="fas fa-trash"></i> Remover</button>
+                            </div>
+                            <div class="mt-4 p-3 sm:p-4 bg-brand-900 rounded-2xl inline-block border-4 border-brand-800 shadow-hard w-full md:w-auto text-center overflow-hidden">
+                                <img id="preview-logo" class="h-12 sm:h-16 mx-auto object-contain max-w-full" style="display:none;">
+                            </div>
+                        </div>
+
+                        <h4 class="font-black text-slate-800 uppercase tracking-widest text-[10px] sm:text-sm mb-4 sm:mb-6 border-b-2 border-slate-200 pb-3 break-words"><i class="fas fa-align-left text-brand-500 mr-2"></i> Textos Institucionais</h4>
+                        <div class="form-group mb-4 sm:mb-5"><label class="text-[10px] sm:text-xs font-black break-words">Barra Superior (Aviso)</label><input type="text" id="cfg-topbar" class="form-input bg-white text-xs sm:text-sm"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black break-words">Título "Sobre"</label><input type="text" id="cfg-about-title" class="form-input bg-white text-xs sm:text-sm"></div>
+                            <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black break-words">Subtítulo Curto</label><input type="text" id="cfg-about-p1" class="form-input bg-white text-xs sm:text-sm"></div>
+                        </div>
+                        <div class="form-group mb-5 sm:mb-6"><label class="text-[10px] sm:text-xs font-black break-words">Descrição "Sobre"</label><textarea id="cfg-about-p2" rows="3" class="form-input bg-white text-xs sm:text-sm"></textarea></div>
+                        
+                        <button class="btn-physical w-full bg-brand-900 text-brand-yellow border-2 border-brand-900 font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm shadow-hard flex items-center justify-center gap-2 break-words" onclick="salvarConfiguracoesGlobais()"><i class="fas fa-save text-base sm:text-lg"></i> Gravar Configurações Gerais</button>
+                    </div>
+
+                    <!-- Gestão de Banners -->
+                    <div class="bg-white border-2 border-slate-200 p-5 sm:p-8 rounded-2xl sm:rounded-3xl shadow-sm overflow-hidden">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-4">
+                            <h3 class="font-black uppercase text-slate-800 tracking-widest text-[10px] sm:text-base break-words"><i class="fas fa-images text-brand-500 mr-2"></i> Banners Principais</h3>
+                            <button class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow font-black px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-[10px] sm:text-xs uppercase tracking-widest shadow-hard flex items-center justify-center gap-2" onclick="abrirModalBanner()"><i class="fas fa-plus"></i> Novo Banner</button>
+                        </div>
+                        <div id="lista-adm-banners" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modais -->
+    <!-- Modal: Produto -->
+    <div class="modal-overlay" id="erp-prod-modal-overlay">
+        <div class="bg-white w-[95%] sm:w-full max-w-2xl rounded-2xl sm:rounded-3xl shadow-hard border-4 border-brand-900 p-5 sm:p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button class="absolute top-4 sm:top-6 right-4 sm:right-6 bg-slate-100 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl font-black text-slate-500 hover:bg-brand-900 hover:text-white transition-colors flex items-center justify-center" onclick="fecharModalProduto()"><i class="fas fa-times"></i></button>
+            <h3 id="erp-modal-title" class="font-montserrat text-xl sm:text-2xl font-black uppercase text-slate-900 mb-6 sm:mb-8 border-b-2 border-slate-100 pb-2 sm:pb-3 pr-10 break-words">Produto</h3>
+            
+            <input type="hidden" id="erp-prod-id">
+            <div class="form-group mb-4 sm:mb-5"><label class="text-[10px] sm:text-xs font-black">Nome do Produto</label><input type="text" id="erp-prod-nome" class="form-input bg-slate-50 text-xs sm:text-sm"></div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
+                <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black">SKU</label><input type="text" id="erp-prod-sku" class="form-input bg-slate-50 text-xs sm:text-sm" placeholder="Automático"></div>
+                <div class="form-group mb-0">
+                    <label class="text-[10px] sm:text-xs font-black">Categoria</label>
+                    <select id="erp-prod-cat" class="form-input bg-slate-50 text-xs sm:text-sm">
+                        <option value="Todos">Nenhuma</option>
+                        <option value="Pet Shop">Pet Shop</option>
+                        <option value="Agropecuária">Agropecuária</option>
+                        <option value="Moda Country">Moda Country</option>
+                        <option value="Equinos">Equinos</option>
+                        <option value="Jardinagem">Jardinagem</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
+                <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black">Custo (R$)</label><input type="number" id="erp-prod-custo" class="form-input bg-slate-50 text-xs sm:text-sm" step="0.01"></div>
+                <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black text-emerald-600">Venda (R$) *</label><input type="number" id="erp-prod-preco" class="form-input bg-slate-50 border-emerald-300 text-xs sm:text-sm" step="0.01"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 sm:gap-5 bg-slate-50 p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-slate-200 mb-5 sm:mb-6">
+                <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black text-brand-500">Estoque Atual *</label><input type="number" id="erp-prod-estoque" class="form-input font-black text-brand-500 border-brand-200 text-xs sm:text-sm"></div>
+                <div class="form-group mb-0"><label class="text-[10px] sm:text-xs font-black">Alerta Mínimo</label><input type="number" id="erp-prod-min" class="form-input text-slate-500 text-xs sm:text-sm"></div>
+            </div>
+            
+            <div class="form-group mb-5 sm:mb-6">
+                <label class="text-[10px] sm:text-xs font-black">Fotografia (URL ou Upload) *</label>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    <input type="text" id="erp-prod-img-b64" class="form-input flex-1 bg-slate-50 text-xs sm:text-sm">
+                    <label class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow cursor-pointer px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl font-black shadow-hard flex items-center justify-center border-2 border-brand-900">
+                        <i class="fas fa-camera text-base sm:text-lg"></i>
+                        <input type="file" class="hidden" accept="image/*" onchange="processarImagem(this, 'erp-preview-img', 'erp-prod-img-b64')">
+                    </label>
+                </div>
+                <div class="w-full text-center mt-3 sm:mt-4">
+                    <img id="erp-preview-img" class="h-32 sm:h-40 mx-auto rounded-xl sm:rounded-2xl object-contain border-2 border-slate-200 bg-slate-50 p-2 hidden max-w-full">
+                </div>
+            </div>
+
+            <div class="form-group mb-6 sm:mb-8"><label class="text-[10px] sm:text-xs font-black">Descrição</label><textarea id="erp-prod-desc" rows="3" class="form-input bg-slate-50 text-xs sm:text-sm"></textarea></div>
+            
+            <div class="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
+                <button class="w-full bg-slate-100 text-slate-600 font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm hover:bg-slate-200 transition" onclick="fecharModalProduto()">Cancelar</button>
+                <button class="btn-physical w-full bg-brand-500 text-white border-2 border-brand-900 font-black py-3 sm:py-4 rounded-xl uppercase tracking-widest text-[10px] sm:text-sm shadow-hard" onclick="salvarEdicaoProdutoERP()">Salvar Produto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Loja -->
+    <div class="modal-overlay" id="erp-loja-modal-overlay">
+        <div class="bg-white w-[95%] sm:w-full max-w-md rounded-2xl sm:rounded-3xl shadow-hard border-4 border-brand-900 p-5 sm:p-8 relative">
+            <button class="absolute top-4 sm:top-6 right-4 sm:right-6 bg-slate-100 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl font-black text-slate-500 hover:bg-brand-900 hover:text-white transition-colors flex items-center justify-center" onclick="fecharModalLoja()"><i class="fas fa-times"></i></button>
+            <h3 id="erp-modal-loja-title" class="font-montserrat text-xl sm:text-2xl font-black uppercase mb-6 sm:mb-8 border-b-2 border-slate-100 pb-2 sm:pb-3 pr-10 break-words">Unidade</h3>
+            <input type="hidden" id="erp-loja-id">
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Nome *</label><input type="text" id="erp-loja-nome" class="form-input bg-slate-50 text-xs sm:text-sm"></div>
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Endereço *</label><textarea id="erp-loja-end" rows="2" class="form-input bg-slate-50 text-xs sm:text-sm"></textarea></div>
+            <div class="form-group mb-6 sm:mb-8">
+                <label class="text-[10px] sm:text-xs font-black">Foto Fachada</label>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    <input type="text" id="erp-loja-img-b64" class="form-input flex-1 bg-slate-50 text-xs sm:text-sm">
+                    <label class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow cursor-pointer px-4 py-2.5 sm:py-3 rounded-xl font-black shadow-hard flex items-center justify-center"><i class="fas fa-upload"></i><input type="file" class="hidden" accept="image/*" onchange="processarImagem(this, 'erp-preview-loja-img', 'erp-loja-img-b64')"></label>
+                </div>
+                <img id="erp-preview-loja-img" class="h-24 sm:h-32 w-full mt-3 sm:mt-4 object-cover rounded-xl sm:rounded-2xl border-2 border-slate-200 hidden max-w-full">
+            </div>
+            <button class="btn-physical w-full bg-brand-500 text-white border-2 border-brand-900 font-black py-3 sm:py-4 rounded-xl shadow-hard uppercase tracking-widest text-[10px] sm:text-sm" onclick="salvarLojaERP()">Salvar</button>
+        </div>
+    </div>
+
+    <!-- Modal Depoimento -->
+    <div class="modal-overlay" id="erp-dep-modal-overlay">
+        <div class="bg-white w-[95%] sm:w-full max-w-md rounded-2xl sm:rounded-3xl shadow-hard border-4 border-brand-900 p-5 sm:p-8 relative">
+            <button class="absolute top-4 sm:top-6 right-4 sm:right-6 bg-slate-100 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl font-black text-slate-500 hover:bg-brand-900 hover:text-white transition-colors flex items-center justify-center" onclick="fecharModalDepoimento()"><i class="fas fa-times"></i></button>
+            <h3 id="erp-modal-dep-title" class="font-montserrat text-xl sm:text-2xl font-black uppercase mb-6 sm:mb-8 border-b-2 border-slate-100 pb-2 sm:pb-3 pr-10 break-words">Avaliação</h3>
+            <input type="hidden" id="erp-dep-id">
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Nome *</label><input type="text" id="erp-dep-nome" class="form-input bg-slate-50 text-xs sm:text-sm"></div>
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Texto *</label><textarea id="erp-dep-texto" rows="3" class="form-input bg-slate-50 text-xs sm:text-sm"></textarea></div>
+            <div class="form-group mb-6 sm:mb-8">
+                <label class="text-[10px] sm:text-xs font-black">Avatar</label>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    <input type="text" id="erp-dep-img-b64" class="form-input flex-1 bg-slate-50 text-xs sm:text-sm">
+                    <label class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow cursor-pointer px-4 py-2.5 sm:py-3 rounded-xl font-black shadow-hard flex items-center justify-center"><i class="fas fa-user"></i><input type="file" class="hidden" accept="image/*" onchange="processarImagem(this, 'erp-preview-dep-img', 'erp-dep-img-b64')"></label>
+                </div>
+                <div class="w-full text-center mt-3 sm:mt-4">
+                    <img id="erp-preview-dep-img" class="h-16 w-16 sm:h-20 sm:w-20 mx-auto object-cover rounded-full border-4 border-slate-200 hidden max-w-full">
+                </div>
+            </div>
+            <button class="btn-physical w-full bg-brand-500 text-white border-2 border-brand-900 font-black py-3 sm:py-4 rounded-xl shadow-hard uppercase tracking-widest text-[10px] sm:text-sm" onclick="salvarDepoimentoERP()">Publicar</button>
+        </div>
+    </div>
+
+    <!-- Modal Banner -->
+    <div class="modal-overlay" id="erp-banner-modal-overlay">
+        <div class="bg-white w-[95%] sm:w-full max-w-md rounded-2xl sm:rounded-3xl shadow-hard border-4 border-brand-900 p-5 sm:p-8 relative">
+            <button class="absolute top-4 sm:top-6 right-4 sm:right-6 bg-slate-100 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl font-black text-slate-500 hover:bg-brand-900 hover:text-white transition-colors flex items-center justify-center" onclick="fecharModalBanner()"><i class="fas fa-times"></i></button>
+            <h3 id="erp-modal-banner-title" class="font-montserrat text-xl sm:text-2xl font-black uppercase mb-6 sm:mb-8 border-b-2 border-slate-100 pb-2 sm:pb-3 pr-10 break-words">Banner</h3>
+            <input type="hidden" id="erp-banner-id">
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Título</label><input type="text" id="erp-banner-title" class="form-input bg-slate-50 text-xs sm:text-sm"></div>
+            <div class="form-group mb-4"><label class="text-[10px] sm:text-xs font-black">Subtítulo</label><input type="text" id="erp-banner-text" class="form-input bg-slate-50 text-xs sm:text-sm"></div>
+            <div class="form-group mb-6 sm:mb-8">
+                <label class="text-[10px] sm:text-xs font-black">Fundo *</label>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                    <input type="text" id="erp-banner-img-b64" class="form-input flex-1 bg-slate-50 text-xs sm:text-sm">
+                    <label class="btn-physical w-full sm:w-auto bg-brand-900 text-brand-yellow cursor-pointer px-4 py-2.5 sm:py-3 rounded-xl font-black shadow-hard flex items-center justify-center border-2 border-brand-900"><i class="fas fa-image"></i><input type="file" class="hidden" accept="image/*" onchange="processarImagem(this, 'erp-preview-banner-img', 'erp-banner-img-b64')"></label>
+                </div>
+                <img id="erp-preview-banner-img" class="w-full h-24 sm:h-40 mt-3 sm:mt-4 object-cover rounded-xl sm:rounded-2xl border-2 border-slate-200 hidden max-w-full">
+            </div>
+            <button class="btn-physical w-full bg-brand-500 text-white border-2 border-brand-900 font-black py-3 sm:py-4 rounded-xl shadow-hard uppercase tracking-widest text-[10px] sm:text-sm" onclick="salvarBannerERP()">Gravar</button>
+        </div>
+    </div>
+
+    <div id="toast">Mensagem</div>
+
+    <!-- JAVASCRIPT UNIVERSAL (Robustez + Novas Animações) -->
+    <script>
+        // Header Glass Effect on Scroll
+        window.addEventListener('scroll', function() {
+            var header = document.getElementById('public-header');
+            if (window.scrollY > 20) {
+                header.classList.add('header-glass');
+                header.classList.remove('bg-brand-900');
+            } else {
+                header.classList.remove('header-glass');
+                header.classList.add('bg-brand-900');
+            }
+        });
+
+        function showLoader(show) { document.getElementById('global-loader').style.display = show ? 'flex' : 'none'; }
+        function showToast(m, isErr) { 
+            var t = document.getElementById("toast"); if(!t) return; 
+            t.innerText = m; t.className = isErr ? "show error" : "show"; 
+            setTimeout(function() { t.className = t.className.replace("show", "").replace("error", ""); }, 3000); 
+        }
+
+        var API = {
+            TOKEN: 'agro-pet-2026',
+            getUrl: function() { return window.state.config.gasUrl || null; },
+            get: async function() {
+                var url = this.getUrl(); if(!url) return null;
+                try { var req = await fetch(url); return await req.json(); } catch(e) { return null; }
+            },
+            post: async function(payload) {
+                var url = this.getUrl(); if(!url) return { success: true, local: true };
+                try { payload.token = this.TOKEN; var req = await fetch(url, { method: 'POST', body: JSON.stringify(payload) }); return await req.json(); } catch(e) { return { success: false }; }
+            }
+        };
+
+        var state = { 
+            isLogged: false, cliente: null, produtos: [], vendas: [], carrinho: [], lojas: [], pdvCart: [], depoimentos: [], currentFilter: 'Todos',
+            config: {
+                gasUrl: "", nomeLoja: "Sua Logo AgroPet", telefone: "5584999999999", corPrimaria: "#16a34a", corSecundaria: "#facc15",
+                topBar: "O MELHOR PARA O HOMEM DO CAMPO E SEU PET! OFERTAS ESPECIAIS.",
+                aboutTitle: "TRADIÇÃO E QUALIDADE", aboutP1: "O parceiro certo para o homem do campo e seu pet.", aboutP2: "Encontre as melhores marcas em um só lugar. Compre online e retire com facilidade na nossa loja ou receba na sua fazenda.",
+                banners: [], 
+                logoUrl: "" // Vazio força o texto Sua Logo aparecer automaticamente com o ícone.
+            }
+        };
+
+        function formatarMoeda(v) { return parseFloat(v||0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+        function escapeHTML(s) { return (s||'').toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+        function processarImagem(input, previewId, hiddenId) {
+            const file = input.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let w = img.width, h = img.height; const maxW = 1000, maxH = 1000; 
+                    if (w > h) { if (w > maxW) { h *= maxW / w; w = maxW; } } else { if (h > maxH) { w *= maxH / h; h = maxH; } }
+                    canvas.width = w; canvas.height = h; canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    const b64 = canvas.toDataURL('image/jpeg', 0.8);
+                    const hiddenEl = document.getElementById(hiddenId); if(hiddenEl) hiddenEl.value = b64;
+                    const prevEl = document.getElementById(previewId); 
+                    if(prevEl) { prevEl.src = b64; prevEl.style.display = 'block'; prevEl.classList.remove('hidden'); }
+                }; img.src = e.target.result;
+            }; reader.readAsDataURL(file);
+        }
+
+        // Alterado de mc_ para agropet_ para não causar conflito de cache caso rode no mesmo ambiente local
+        function sincronizarStorage() { 
+            localStorage.setItem('agropet_erp_produtos', JSON.stringify(window.state.produtos)); 
+            localStorage.setItem('agropet_carrinho', JSON.stringify(window.state.carrinho)); 
+            localStorage.setItem('agropet_config', JSON.stringify(window.state.config));
+            localStorage.setItem('agropet_cliente', JSON.stringify(window.state.cliente));
+            localStorage.setItem('agropet_erp_vendas', JSON.stringify(window.state.vendas));
+            localStorage.setItem('agropet_lojas', JSON.stringify(window.state.lojas));
+            localStorage.setItem('agropet_depoimentos', JSON.stringify(window.state.depoimentos));
+        }
+
+        async function syncDataFromCloud() {
+            showLoader(true);
+            var data = await API.get();
+            if(data && data.success && data.data) {
+                if(data.data.produtos) window.state.produtos = data.data.produtos;
+                if(data.data.vendas) window.state.vendas = data.data.vendas;
+                sincronizarStorage(); showToast("Nuvem Sincronizada!");
+            } else { showToast("Modo Offline Ativo."); }
+            renderizarVitrine();
+            if(document.getElementById('view-admin').classList.contains('active')) { renderERP_Dashboard(); renderERP_Produtos(); }
+            showLoader(false);
+        }
+
+        function baixarRelatorioCSV() {
+            var csv = "ID,SKU,Nome,Custo,Venda,Estoque,Minimo\n";
+            window.state.produtos.forEach(function(p){ csv += p.id+',"'+(p.sku||'')+'","'+(p.nome||'').replace(/"/g, '""')+'",'+(p.precoCusto||0)+','+(p.preco||0)+','+(p.estoque||0)+','+(p.estoqueMinimo||0)+'\n'; });
+            var blob = new Blob(["\ufeff", csv], { type: 'text/csv;charset=utf-8;' });
+            var link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = 'estoque_agropet.csv'; link.click();
+        }
+
+        window.onload = async function() {
+            var VERSION = "v2_agropet_modern"; 
+            if(localStorage.getItem('agropet_version') !== VERSION) {
+                
+                // --- NOVOS PRODUTOS AGROPET ---
+                window.state.produtos = [
+                    // Pet Shop
+                    { id: 1, sku: "PET-01", nome: "Ração Golden Especial Cães Adultos 15kg", categoria: "Pet Shop", precoCusto: 95, preco: 145.90, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&h=400&fit=crop", descricao: "Alimento Premium Especial. Ingredientes de alta qualidade, garantindo maior digestibilidade e pelos mais bonitos." },
+                    { id: 2, sku: "PET-02", nome: "Coleira Antipulgas e Carrapatos Seresto", categoria: "Pet Shop", precoCusto: 120, preco: 219.00, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=600&h=400&fit=crop", descricao: "Proteção contínua por até 8 meses contra pulgas, carrapatos e doenças transmissíveis." },
+                    { id: 3, sku: "PET-03", nome: "Shampoo Neutro Pet Clean 500ml", categoria: "Pet Shop", precoCusto: 12, preco: 24.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1583337260546-28b6bf66d004?w=600&h=400&fit=crop", descricao: "Limpeza profunda sem agredir a pele do seu cão ou gato. Cheirinho de banho tomado que dura." },
+                    { id: 4, sku: "PET-04", nome: "Areia Sanitária Pipicat 4kg", categoria: "Pet Shop", precoCusto: 8, preco: 16.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=400&fit=crop", descricao: "Alto poder de absorção e controle de odores para o banheiro do seu felino." },
+                    // Agropecuária
+                    { id: 5, sku: "AGR-01", nome: "Pulverizador Costal Agrícola Jacto 20L", categoria: "Agropecuária", precoCusto: 180, preco: 299.90, estoque: 8, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1592982537447-6f2a6a0a3000?w=600&h=400&fit=crop", descricao: "Resistência e durabilidade para aplicação de defensivos e fertilizantes na sua lavoura." },
+                    { id: 6, sku: "AGR-02", nome: "Arame Farpado Motto 500m Belgo", categoria: "Agropecuária", precoCusto: 280, preco: 420.00, estoque: 12, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1558234399-5ea0751b3d88?w=600&h=400&fit=crop", descricao: "Alta resistência ao impacto e durabilidade contra ferrugem para cercar sua propriedade." },
+                    { id: 7, sku: "AGR-03", nome: "Carrinho de Mão Extra Forte Pneu Maciço", categoria: "Agropecuária", precoCusto: 150, preco: 249.90, estoque: 6, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1582226223573-455f750b3f88?w=600&h=400&fit=crop", descricao: "Agüenta o tranco no sítio ou na obra. Caçamba reforçada e pneu que não fura." },
+                    { id: 8, sku: "AGR-04", nome: "Sal Mineral Tortuga Cria e Recria 30kg", categoria: "Agropecuária", precoCusto: 90, preco: 145.00, estoque: 20, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1594498653385-d5172c532c00?w=600&h=400&fit=crop", descricao: "Suplementação mineral de excelência para aumento de peso e saúde do seu rebanho bovino." },
+                    // Moda Country
+                    { id: 9, sku: "CTY-01", nome: "Bota Texana Masculina Couro Legítimo", categoria: "Moda Country", precoCusto: 150, preco: 289.90, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=600&h=400&fit=crop", descricao: "Estilo e resistência para o dia a dia no campo ou para o rodeio." },
+                    { id: 10, sku: "CTY-02", nome: "Chapéu de Palha Karandá", categoria: "Moda Country", precoCusto: 40, preco: 89.90, estoque: 30, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1586221589578-83b63cc3bbcb?w=600&h=400&fit=crop", descricao: "Tradição pantaneira com proteção solar máxima pro seu trabalho sob o sol." },
+                    { id: 11, sku: "CTY-03", nome: "Cinto de Couro com Fivela Peão", categoria: "Moda Country", precoCusto: 45, preco: 95.00, estoque: 20, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1624898144078-68f7ec7eb2e3?w=600&h=400&fit=crop", descricao: "Acabamento rústico, fivela robusta e couro de boi 100% autêntico." },
+                    // Equinos
+                    { id: 12, sku: "EQU-01", nome: "Ração Supra Especial Cavalos 30kg", categoria: "Equinos", precoCusto: 75, preco: 115.00, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1553641253-8321045fbc5b?w=600&h=400&fit=crop", descricao: "Energia e força para equinos de trabalho e passeio. Altamente palatável." },
+                    { id: 13, sku: "EQU-02", nome: "Sela Australiana Completa Couro", categoria: "Equinos", precoCusto: 450, preco: 790.00, estoque: 3, estoqueMinimo: 1, imagem: "https://images.unsplash.com/photo-1534440059887-19077de4a406?w=600&h=400&fit=crop", descricao: "Conforto para o cavaleiro e para o animal. Acompanha loro, estribo, barrigueira e cabeçada." },
+                    { id: 14, sku: "EQU-03", nome: "Mata Bicheira Prata Spray 500ml", categoria: "Equinos", precoCusto: 18, preco: 35.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1628186835269-e7d6929e798e?w=600&h=400&fit=crop", descricao: "Cicatrizante e repelente potente. Essencial na farmácia da sua propriedade." },
+                    // Jardinagem
+                    { id: 15, sku: "JAR-01", nome: "Tesoura de Poda Profissional Tramontina", categoria: "Jardinagem", precoCusto: 35, preco: 69.90, estoque: 18, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1416879598555-31ba511ab1ec?w=600&h=400&fit=crop", descricao: "Corte preciso e fácil. Lâmina em aço carbono perfeita para flores e galhos finos." },
+                    { id: 16, sku: "JAR-02", nome: "Kit de Jardinagem 3 Peças (Pá, Ancinho)", categoria: "Jardinagem", precoCusto: 20, preco: 45.00, estoque: 22, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=600&h=400&fit=crop", descricao: "O básico indispensável para manter seus vasos e pequenos canteiros lindos." },
+                    { id: 17, sku: "JAR-03", nome: "Adubo NPK 10-10-10 Saco 1kg", categoria: "Jardinagem", precoCusto: 8, preco: 18.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1592424040940-272e008cc91b?w=600&h=400&fit=crop", descricao: "Fórmula equilibrada para crescimento saudável e floração vibrante em qualquer tipo de planta." },
+                    { id: 18, sku: "JAR-04", nome: "Mangueira de Jardim Flexível 20 metros", categoria: "Jardinagem", precoCusto: 45, preco: 89.90, estoque: 10, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1585837920389-4cc3866ce965?w=600&h=400&fit=crop", descricao: "Acompanha esguicho e conectores. Não torce e não resseca no sol." }
+                ];
+                
+                window.state.lojas = [ 
+                    {id: 1, nome: "Matriz Centro", endereco: "Rua do Comércio Agrícola, 100\nCentro - Sua Cidade", imagem: "https://images.unsplash.com/photo-1592495914619-3db631a0e054?auto=format&fit=crop&w=600"},
+                    {id: 2, nome: "Filial Beira-Rio (Rações)", endereco: "Av. dos Produtores, 500\nBairro Rural - Sua Cidade", imagem: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=600"}
+                ];
+                
+                window.state.depoimentos = [ 
+                    {id: 1, nome: "Seu Tonho", texto: "Sempre compro os insumos da lavoura aqui. Preço justo e o atendimento é coisa de amigo de longa data.", foto: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100"},
+                    {id: 2, nome: "Marcos V.", texto: "A ração do meu Fiel chegou rapidinho pelo delivery. Loja excelente, recomendo a todos!", foto: "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=100"},
+                    {id: 3, nome: "Luciana Costa", texto: "Adorei a bota texana! Serviu direitinho, couro macio. Agora só compro bota por aqui.", foto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100"},
+                    {id: 4, nome: "Roberto Silva", texto: "Fui comprar arame pra cerca e aproveitei pra levar remédio pro cavalo. Ter tudo num lugar só facilita demais a lida.", foto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100"},
+                ];
+                
+                window.state.config.banners = [ 
+                    { img: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200", title: "O MELHOR PRO SEU PET", text: "Rações premium, medicamentos e acessórios." },
+                    { img: "https://images.unsplash.com/photo-1592982537447-6f2a6a0a3000?auto=format&fit=crop&w=1200", title: "FORÇA NO CAMPO", text: "Insumos e ferramentas de quem entende de trabalho pesado." },
+                    { img: "https://images.unsplash.com/photo-1594498653385-d5172c532c00?auto=format&fit=crop&w=1200", title: "SAÚDE ANIMAL", text: "Suplementos e vacinas para seu rebanho e equinos." }
+                ];
+                
+                localStorage.setItem('agropet_version', VERSION);
+                sincronizarStorage();
+            } else {
+                window.state.produtos = JSON.parse(localStorage.getItem('agropet_erp_produtos')) || [];
+                window.state.carrinho = JSON.parse(localStorage.getItem('agropet_carrinho')) || [];
+                window.state.config = Object.assign({}, window.state.config, JSON.parse(localStorage.getItem('agropet_config')) || {});
+                window.state.cliente = JSON.parse(localStorage.getItem('agropet_cliente')) || null;
+                window.state.vendas = JSON.parse(localStorage.getItem('agropet_erp_vendas')) || [];
+                window.state.lojas = JSON.parse(localStorage.getItem('agropet_lojas')) || [];
+                window.state.depoimentos = JSON.parse(localStorage.getItem('agropet_depoimentos')) || [];
+            }
+
+            aplicarTemaEConfiguracoes(); 
+            atualizarBadgeCarrinho(); 
+            navigate('vitrine'); 
+            
+            var btnSecret = document.getElementById('btn-secret-admin');
+            if(btnSecret) { btnSecret.addEventListener('click', function(e) { e.preventDefault(); navigate('login'); }); }
+
+            setTimeout(function() {
+                var loader = document.getElementById('preloader');
+                if(loader) { 
+                    loader.style.opacity = '0'; 
+                    loader.style.visibility = 'hidden';
+                    setTimeout(function() { loader.style.display = 'none'; }, 600); 
+                }
+            }, 1200);
+
+            if(window.state.config.gasUrl) await syncDataFromCloud();
+        };
+
+        /* --- CONFIGURAÇÕES VISUAIS --- */
+        function aplicarTemaEConfiguracoes() {
+            var c = window.state.config;
+            document.documentElement.style.setProperty('--primary', c.corPrimaria || '#16a34a'); 
+            document.documentElement.style.setProperty('--secondary', c.corSecundaria || '#facc15');
+            
+            if(document.getElementById('ui-top-bar-text')) document.getElementById('ui-top-bar-text').innerHTML = '<i class="fas fa-leaf"></i> ' + escapeHTML(c.topBar) + ' <i class="fas fa-paw"></i>';
+            if(document.getElementById('ui-about-title')) document.getElementById('ui-about-title').innerText = c.aboutTitle;
+            if(document.getElementById('ui-about-text1')) document.getElementById('ui-about-text1').innerText = c.aboutP1;
+            if(document.getElementById('ui-about-text2')) document.getElementById('ui-about-text2').innerHTML = c.aboutP2;
+            
+            var logoHTML = c.logoUrl ? '<img src="'+c.logoUrl+'" style="height:48px; object-fit:contain; max-width:100%;">' : '<div class="flex items-center gap-2 font-black text-white text-xl sm:text-2xl uppercase tracking-tighter break-words"><i class="fas fa-tractor text-brand-yellow"></i> '+escapeHTML(c.nomeLoja)+'</div>';
+            if(document.getElementById('ui-main-logo')) document.getElementById('ui-main-logo').innerHTML = logoHTML;
+            if(document.getElementById('footer-logo-container')) document.getElementById('footer-logo-container').innerHTML = logoHTML;
+
+            var wapp = document.getElementById('footer-whatsapp-link');
+            if(wapp && c.telefone) wapp.href = "https://wa.me/" + c.telefone.replace(/\D/g,'');
+
+            var slider = document.getElementById('hero-slider');
+            if (slider) {
+                if(!c.banners || c.banners.length === 0) { 
+                    slider.innerHTML = '<div class="slide active"><div class="slide-bg" style="background:#064E3B;"></div><div class="slide-content"><h2 class="font-montserrat text-white text-xl sm:text-2xl">SEM BANNERS</h2></div></div>'; 
+                } else { 
+                    var h = '';
+                    c.banners.forEach(function(b, idx) { 
+                        h += '<div class="slide '+(idx===0?'active':'')+'"><div class="slide-bg" style="background-image: url(\''+b.img+'\');"></div><div class="slide-content w-full"><h2 class="font-montserrat font-black uppercase text-2xl sm:text-3xl md:text-5xl tracking-tighter shadow-black drop-shadow-lg mb-2 break-words" style="color:var(--secondary);">'+escapeHTML(b.title)+'</h2><p class="font-bold text-base sm:text-lg md:text-xl drop-shadow-md break-words">'+escapeHTML(b.text)+'</p><button class="mt-4 sm:mt-6 btn-physical bg-brand-500 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-black text-[10px] sm:text-xs uppercase tracking-widest border-2 border-brand-900 shadow-hard" onclick="document.getElementById(\'grid-produtos\').scrollIntoView({behavior:\'smooth\', block:\'start\'})">Ver Produtos</button></div></div>'; 
+                    }); 
+                    slider.innerHTML = h;
+                }
+            }
+            iniciarCarrossel();
+        }
+
+        var sliderInterval;
+        function iniciarCarrossel() {
+            clearInterval(sliderInterval); 
+            var s = document.querySelectorAll('.slide'); if(s.length <= 1) return;
+            sliderInterval = setInterval(function() { 
+                var act = document.querySelector('.slide.active'); if(!act) return; 
+                act.classList.remove('active'); 
+                var next = act.nextElementSibling; if(!next || !next.classList.contains('slide')) next = s[0];
+                next.classList.add('active'); 
+            }, 6000); 
+        }
+
+        /* --- NAVEGAÇÃO --- */
+        function toggleCart() {
+            var s = document.getElementById('cart-sidebar');
+            var o = document.getElementById('cart-overlay');
+            if(!s || !o) return;
+            if(s.classList.contains('translate-x-full')) {
+                s.classList.remove('translate-x-full'); o.classList.remove('hidden'); setTimeout(function(){o.classList.add('show');},10);
+                renderizarCarrinho();
+            } else {
+                s.classList.add('translate-x-full'); o.classList.remove('show'); setTimeout(function(){o.classList.add('hidden');},300);
+            }
+        }
+
+        function navigate(viewId) {
+            var isAdm = viewId === 'admin';
+            var publicEls = ['public-topbar', 'public-header', 'public-bottom-nav', 'public-footer'];
+            
+            publicEls.forEach(function(id) { 
+                var el = document.getElementById(id); 
+                if(el) {
+                    if(isAdm) {
+                        el.style.display = 'none';
+                    } else {
+                        if(id === 'public-bottom-nav') el.style.display = 'flex';
+                        else el.style.display = 'block';
+                    }
+                }
+            });
+            
+            if (isAdm && !window.state.isLogged) { 
+                viewId = 'login'; 
+                document.getElementById('public-header').style.display = 'block'; 
+            }
+            
+            document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+            var vEl = document.getElementById('view-' + viewId); if(vEl) vEl.classList.add('active');
+            
+            if (viewId === 'vitrine') renderizarVitrine();
+            else if (viewId === 'admin') abrirAbaAdmin('dashboard');
+            else if (viewId === 'perfil') atualizarUICliente();
+            else if (viewId === 'checkout') renderizarCheckout();
+            
+            window.scrollTo(0,0);
+        }
+
+        function filtrarPorCategoria(cat, btn) {
+            window.state.currentFilter = cat;
+            document.querySelectorAll('.cat-pill').forEach(function(b) { b.classList.remove('active'); });
+            if(btn) btn.classList.add('active');
+            renderizarVitrine();
+        }
+
+        function filtrarVitrine() {
+            window.state.currentFilter = 'Todos';
+            document.querySelectorAll('.cat-pill').forEach(function(b) { b.classList.remove('active'); });
+            var fp = document.querySelector('.cat-pill'); if(fp) fp.classList.add('active');
+            renderizarVitrine();
+        }
+
+        function renderizarVitrine() {
+            var grid = document.getElementById('grid-produtos');
+            if (grid) {
+                var inp = document.getElementById('inputBusca');
+                var termo = inp ? inp.value.toLowerCase() : '';
+                var filtrados = window.state.produtos.filter(function(p) {
+                    var mBusca = p.nome.toLowerCase().includes(termo) || (p.sku||'').toLowerCase().includes(termo);
+                    var mCat = window.state.currentFilter === 'Todos' || p.categoria === window.state.currentFilter;
+                    return mBusca && mCat;
+                });
+
+                var h = '';
+                filtrados.forEach(function(p, index) {
+                    var noCart = window.state.carrinho.find(function(i){ return String(i.id) === String(p.id); });
+                    var isDisp = p.estoque > 0;
+                    
+                    // Design atualizado: Badge Flutuante igual a imagem
+                    var badge = isDisp ? 
+                        (noCart ? '<span class="bg-blue-600 text-white px-2.5 py-1 rounded-md text-[9px] sm:text-[10px] font-black uppercase shadow-sm flex items-center"><i class="fas fa-check mr-1"></i> Na Sacola</span>' : 
+                                  '<span class="bg-brand-500 text-white px-2.5 py-1 rounded-md text-[9px] sm:text-[10px] font-black uppercase shadow-sm">Estoque</span>') : 
+                        '<span class="bg-red-500 text-white px-2.5 py-1 rounded-md text-[9px] sm:text-[10px] font-black uppercase shadow-sm">Esgotado</span>';
+                    
+                    // Design atualizado: Botão Neobrutalista no canto
+                    var btnHtml = isDisp ? 
+                        (noCart ? '<button class="w-10 h-10 sm:w-12 sm:h-12 rounded-[10px] sm:rounded-xl bg-blue-500 text-white flex items-center justify-center absolute bottom-4 right-4 sm:bottom-5 sm:right-5 border-2 border-brand-900 shadow-[3px_3px_0_0_#064e3b] hover:shadow-[1px_1px_0_0_#064e3b] hover:translate-y-[2px] hover:translate-x-[2px] transition-all text-lg" onclick="event.stopPropagation(); toggleCart()" title="Ver carrinho"><i class="fas fa-shopping-basket"></i></button>' : 
+                                  '<button class="w-10 h-10 sm:w-12 sm:h-12 rounded-[10px] sm:rounded-xl bg-brand-500 text-white flex items-center justify-center absolute bottom-4 right-4 sm:bottom-5 sm:right-5 border-2 border-brand-900 shadow-[3px_3px_0_0_#064e3b] hover:shadow-[1px_1px_0_0_#064e3b] hover:translate-y-[2px] hover:translate-x-[2px] transition-all text-lg" onclick="event.stopPropagation(); addItemCarrinho(\''+p.id+'\')" title="Comprar"><i class="fas fa-plus"></i></button>') : '';
+                    
+                    var delay = Math.min(index * 0.05, 0.8);
+
+                    // Design atualizado: Card Moderno preenchendo a imagem superior
+                    h += '<div class="stagger-item bg-white rounded-[20px] sm:rounded-[28px] overflow-visible shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-2 border-slate-100 flex flex-col cursor-pointer group relative '+(isDisp?'':'opacity-70 grayscale-[30%]')+'" style="animation-delay: '+delay+'s;" onclick="abrirProduto(\''+p.id+'\')">' +
+                            '<div class="relative h-36 sm:h-48 overflow-hidden bg-slate-50 rounded-t-[18px] sm:rounded-t-[26px]">' +
+                                '<div class="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">' + badge + '</div>' +
+                                '<img src="'+p.imagem+'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">' + 
+                            '</div>' +
+                            '<div class="px-4 sm:px-5 pt-4 pb-5 flex flex-col flex-grow relative">' +
+                                '<span class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 block break-words">'+escapeHTML(p.categoria)+'</span>' +
+                                '<h3 class="font-bold text-slate-800 text-sm sm:text-base tracking-tight mb-4 leading-snug line-clamp-2 pr-12 break-words">'+escapeHTML(p.nome)+'</h3>' +
+                                '<div class="mt-auto flex flex-col">' +
+                                    '<span class="text-[10px] sm:text-xs text-slate-400 line-through font-bold mb-[-2px]">R$ '+parseFloat(p.preco * 1.2).toFixed(2).replace('.', ',')+'</span>' + 
+                                    '<span class="font-black text-2xl sm:text-3xl text-brand-500 tracking-tighter break-words">R$ '+parseFloat(p.preco).toFixed(2).replace('.', ',')+'</span>' +
+                                '</div>' + 
+                            '</div>' + btnHtml +
+                         '</div>';
+                });
+                grid.innerHTML = h;
+                var msg = document.getElementById('msg-sem-produto'); if (msg) msg.style.display = filtrados.length === 0 ? 'block' : 'none';
+            }
+            
+            var elLojas = document.getElementById('scroll-lojas');
+            if (elLojas) {
+                var hL = '';
+                window.state.lojas.forEach(function(d, index) {
+                    var delay = index * 0.1;
+                    var mapLink = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(d.endereco);
+                    hL += '<div class="stagger-item bg-white rounded-2xl sm:rounded-3xl border-4 border-brand-900 overflow-hidden shadow-hard flex flex-col group" style="animation-delay: '+delay+'s">' +
+                            '<div class="h-40 sm:h-48 overflow-hidden relative">' +
+                                '<img src="'+(d.imagem||'')+'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">' +
+                                '<div class="absolute inset-0 bg-gradient-to-t from-brand-900/90 to-brand-900/10"></div>' +
+                                '<h3 class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 font-montserrat font-black text-brand-yellow uppercase text-xl sm:text-2xl tracking-tight break-words"><i class="fas fa-store mr-2 opacity-80"></i> '+escapeHTML(d.nome)+'</h3>' +
+                            '</div>' +
+                            '<div class="p-4 sm:p-6 flex flex-col flex-grow bg-slate-50">' +
+                                '<p class="text-xs sm:text-sm font-bold text-slate-600 mb-4 sm:mb-6 whitespace-pre-line leading-relaxed flex gap-2 sm:gap-3 break-words"><i class="fas fa-map-marker-alt text-brand-500 mt-1"></i> '+escapeHTML(d.endereco)+'</p>' +
+                                '<a href="'+mapLink+'" target="_blank" class="btn-physical w-full bg-brand-900 text-white font-black py-3 sm:py-4 rounded-xl text-center text-[10px] sm:text-xs uppercase tracking-widest hover:bg-brand-500 transition mt-auto shadow-hard break-words border-2 border-brand-900"><i class="fas fa-location-arrow mr-2"></i> Como Chegar</a>' +
+                            '</div>' +
+                        '</div>';
+                });
+                elLojas.innerHTML = hL;
+            }
+
+            var elDeps = document.getElementById('track-depoimentos');
+            if (elDeps) {
+                if (window.state.depoimentos && window.state.depoimentos.length > 0) {
+                    var cD = '';
+                    window.state.depoimentos.forEach(function(d) { 
+                        cD += '<div class="bg-slate-50 p-4 sm:p-6 rounded-2xl sm:rounded-3xl border-2 border-slate-200 w-[280px] sm:w-[320px] shrink-0 relative hover:-translate-y-2 transition-transform duration-300 shadow-sm">' +
+                                '<i class="fas fa-quote-right absolute top-4 sm:top-6 right-4 sm:right-6 text-4xl sm:text-5xl text-slate-200"></i>' +
+                                '<div class="flex gap-1 text-brand-yellow mb-3 sm:mb-4 text-[10px] sm:text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>' +
+                                '<p class="text-slate-700 text-xs sm:text-sm font-bold mb-4 sm:mb-6 relative z-10 leading-relaxed min-h-[50px] sm:min-h-[60px] break-words">"'+escapeHTML(d.texto)+'"</p>' +
+                                '<div class="flex items-center gap-3 sm:gap-4">' +
+                                    '<img src="'+d.foto+'" class="w-10 h-10 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-slate-300 shadow-sm">' +
+                                    '<div class="break-words"><h4 class="font-black text-brand-900 text-[10px] sm:text-xs uppercase tracking-widest">'+escapeHTML(d.nome)+'</h4><span class="text-[9px] sm:text-[10px] font-bold text-brand-500"><i class="fas fa-check-circle"></i> Cliente Parceiro</span></div>' +
+                                '</div></div>'; 
+                    });
+                    elDeps.innerHTML = cD + cD; 
+                } else { elDeps.innerHTML = '<p class="text-slate-400 text-xs sm:text-sm font-bold uppercase w-full break-words">Sem avaliações.</p>'; }
+            }
+        }
+
+        function abrirProduto(id) { 
+            var p = window.state.produtos.find(function(x){ return String(x.id) === String(id); }); 
+            if(p) { renderizarDetalheProduto(p.id); navigate('produto'); }
+        }
+        
+        function renderizarDetalheProduto(id) {
+            var p = window.state.produtos.find(function(x){ return String(x.id) === String(id); }); if(!p) return;
+            var isDisp = p.estoque > 0; var noCart = window.state.carrinho.find(function(i){ return String(i.id)===String(p.id); });
+            
+            var btnA = isDisp ? (noCart ? '<button class="btn-physical w-full bg-brand-900 text-brand-yellow font-black py-4 sm:py-5 rounded-xl sm:rounded-2xl uppercase tracking-widest text-xs sm:text-sm shadow-hard flex items-center justify-center gap-2 sm:gap-3 border-2 border-brand-900 break-words" onclick="toggleCart()"><i class="fas fa-shopping-basket text-lg sm:text-xl"></i> Finalizar Compra</button>' : '<button class="btn-physical w-full bg-brand-500 text-white font-black py-4 sm:py-5 rounded-xl sm:rounded-2xl uppercase tracking-widest text-xs sm:text-sm shadow-hard hover:bg-brand-900 hover:text-brand-yellow transition-colors flex items-center justify-center gap-2 sm:gap-3 border-2 border-brand-900 break-words" onclick="addItemCarrinho(\''+p.id+'\')"><i class="fas fa-plus text-lg sm:text-xl"></i> Colocar na Sacola</button>') : '<button class="w-full bg-slate-200 text-slate-500 font-black py-4 sm:py-5 rounded-xl sm:rounded-2xl uppercase tracking-widest text-xs sm:text-sm cursor-not-allowed border-2 border-slate-300 break-words" disabled>Produto Esgotado</button>';
+            
+            var c = document.getElementById('container-produto');
+            if (c) {
+                c.innerHTML = '<div class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-brand-50 rounded-full blur-3xl -z-0 opacity-50 translate-x-1/2 -translate-y-1/2"></div>' +
+                              '<div class="w-full md:w-1/2 bg-slate-50 rounded-2xl sm:rounded-3xl flex items-center justify-center p-4 sm:p-8 border-2 border-slate-200 relative z-10">' +
+                                (isDisp ? '' : '<span class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black uppercase shadow-md">Esgotado</span>') +
+                                '<img src="'+p.imagem+'" class="w-full max-w-[250px] sm:max-w-[350px] md:max-w-[450px] mx-auto object-contain mix-blend-multiply '+(isDisp?'':'opacity-50 grayscale')+' transform hover:scale-105 transition-transform duration-500">' +
+                              '</div>' +
+                              '<div class="w-full md:w-1/2 flex flex-col relative z-10">' +
+                                '<span class="bg-brand-900 text-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest w-max mb-4 sm:mb-5 shadow-sm break-words">'+escapeHTML(p.categoria||'Catálogo')+'</span>' +
+                                '<h1 class="font-montserrat font-black text-2xl sm:text-3xl md:text-4xl text-slate-900 mb-3 sm:mb-4 uppercase tracking-tighter leading-tight break-words">'+escapeHTML(p.nome)+'</h1>' +
+                                '<div class="mb-6 sm:mb-8 flex items-end gap-2 sm:gap-3 flex-wrap">' +
+                                    '<span class="font-montserrat font-black text-3xl sm:text-4xl md:text-5xl text-brand-500 tracking-tighter break-all">R$ '+parseFloat(p.preco).toFixed(2).replace('.', ',')+'</span>' +
+                                    '<span class="text-[10px] sm:text-sm font-bold text-slate-400 mb-1 sm:mb-2 uppercase">À vista</span>' +
+                                '</div>' +
+                                '<div class="bg-emerald-50 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-emerald-100 mb-6 sm:mb-8 flex items-start gap-3 sm:gap-4">' +
+                                    '<i class="fas fa-shield-check text-xl sm:text-2xl text-emerald-500 mt-0.5 sm:mt-1"></i>' +
+                                    '<div>' +
+                                        '<p class="text-[10px] sm:text-xs font-black text-emerald-800 uppercase mb-1 tracking-widest break-words">Qualidade Garantida</p>' +
+                                        '<p class="text-emerald-700 font-medium text-[11px] sm:text-sm break-words">Produto 100% original. O melhor para sua lida e para seu pet.</p>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="mb-8 sm:mb-10 w-full">' + btnA + '</div>' +
+                                '<div class="border-t-2 border-slate-100 pt-6 sm:pt-8 mt-auto w-full">' +
+                                    '<h4 class="font-black text-slate-900 uppercase tracking-widest text-xs sm:text-sm mb-2 sm:mb-3 flex items-center gap-2 break-words"><i class="fas fa-info-circle text-brand-500 text-base sm:text-lg"></i> Detalhes do Produto</h4>' +
+                                    '<p class="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed sm:leading-loose whitespace-pre-line break-words">'+escapeHTML(p.descricao)+'</p>' +
+                                '</div>' +
+                              '</div>';
+            }
+        }
+
+        function addItemCarrinho(id) {
+            var p = window.state.produtos.find(function(x){ return String(x.id) === String(id); }); if(!p || p.estoque <= 0) return;
+            var i = window.state.carrinho.find(function(x){ return String(x.id) === String(id); });
+            if(i) { if(i.qtd < p.estoque) i.qtd++; } else { window.state.carrinho.push({id: p.id, nome: p.nome, preco: p.preco, imagem: p.imagem, est: p.estoque, qtd: 1}); }
+            sincronizarStorage(); atualizarBadgeCarrinho(); 
+            
+            var btnCart = document.getElementById('desktop-cart-btn');
+            if(btnCart) {
+                btnCart.classList.remove('bounce-active');
+                void btnCart.offsetWidth; 
+                btnCart.classList.add('bounce-active');
+            }
+
+            if(document.getElementById('view-vitrine').classList.contains('active')) renderizarVitrine();
+            if(document.getElementById('view-produto').classList.contains('active')) renderizarDetalheProduto(id);
+            
+            showToast("Item Adicionado à Sacola!");
+        }
+
+        function atualizarBadgeCarrinho() {
+            var tot = window.state.carrinho.reduce(function(a,c){ return a+c.qtd; }, 0);
+            document.querySelectorAll('.cart-badge').forEach(function(b) { 
+                b.innerText = tot; b.style.display = tot > 0 ? 'flex' : 'none'; 
+            });
+        }
+
+        function renderizarCarrinho() {
+            var list = document.getElementById('cart-items'); if(!list) return;
+            if(window.state.carrinho.length === 0) {
+                list.innerHTML = '<div class="text-center py-12 sm:py-16"><i class="fas fa-shopping-basket text-5xl sm:text-6xl text-slate-200 mb-4 sm:mb-6 block"></i><p class="font-black text-slate-800 uppercase text-base sm:text-lg tracking-widest break-words">Sua sacola está vazia</p><p class="text-slate-500 font-medium text-xs sm:text-sm mt-2 break-words">Navegue pelas nossas categorias para encontrar o que precisa.</p></div>';
+                document.getElementById('cart-total-val').innerText = 'R$ 0,00';
+                document.getElementById('checkout-btn').disabled = true;
+                return;
+            }
+            document.getElementById('checkout-btn').disabled = false;
+            var t = 0;
+            var h = '';
+            window.state.carrinho.forEach(function(i) {
+                t += i.preco * i.qtd;
+                h += '<div class="flex gap-3 sm:gap-4 bg-white p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm items-center relative hover:shadow-md transition-shadow">' +
+                        '<div class="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50 rounded-xl flex-shrink-0 p-1.5 sm:p-2 border border-slate-100"><img src="'+i.imagem+'" class="w-full h-full object-contain mix-blend-multiply"></div>' +
+                        '<div class="flex-grow pr-6 sm:pr-8 overflow-hidden">' +
+                            '<h4 class="font-bold text-slate-800 text-[10px] sm:text-xs uppercase leading-tight mb-1 sm:mb-2 line-clamp-2 pr-2 sm:pr-4 break-words">'+escapeHTML(i.nome)+'</h4>' +
+                            '<div class="font-montserrat font-black text-brand-500 text-sm sm:text-lg mb-2 sm:mb-3 break-all">R$ '+formatarMoeda(i.preco).replace('R$','')+'</div>' +
+                            '<div class="flex items-center bg-slate-100 w-max rounded-lg border border-slate-200 p-0.5">' +
+                                '<button onclick="mudarQtd(\''+i.id+'\', -1)" class="w-6 h-6 sm:w-8 sm:h-8 font-black text-slate-600 hover:bg-white rounded hover:shadow-sm transition text-xs sm:text-base">-</button>' +
+                                '<span class="text-[10px] sm:text-xs font-black text-slate-900 w-6 sm:w-8 text-center">'+i.qtd+'</span>' +
+                                '<button onclick="mudarQtd(\''+i.id+'\', 1)" class="w-6 h-6 sm:w-8 sm:h-8 font-black text-slate-600 hover:bg-white rounded hover:shadow-sm transition text-xs sm:text-base">+</button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<button onclick="mudarQtd(\''+i.id+'\', -999)" class="absolute top-2 sm:top-4 right-2 sm:right-4 text-slate-300 hover:text-red-500 transition w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center bg-slate-50 rounded-lg hover:bg-red-50"><i class="fas fa-trash-alt text-[10px] sm:text-sm"></i></button>' +
+                    '</div>';
+            });
+            list.innerHTML = h;
+            document.getElementById('cart-total-val').innerText = formatarMoeda(t);
+        }
+
+        function mudarQtd(id, delta) {
+            var i = window.state.carrinho.find(function(x){ return String(x.id)===String(id); }); if(!i) return;
+            i.qtd += delta; 
+            if(i.qtd > i.est) { i.qtd = i.est; showToast("Máximo no estoque: "+i.est, true); }
+            else if(i.qtd <= 0) window.state.carrinho = window.state.carrinho.filter(function(x){ return String(x.id)!==String(id); });
+            sincronizarStorage(); atualizarBadgeCarrinho(); renderizarCarrinho();
+        }
+
+        /* --- CHECKOUT --- */
+        function renderizarCheckout() {
+            var list = document.getElementById('checkout-items-list'); if(!list) return;
+            var t = 0; var h = '';
+            window.state.carrinho.forEach(function(i) { 
+                t += i.preco * i.qtd; 
+                h += '<div class="flex justify-between items-center text-[10px] sm:text-xs font-bold text-brand-100 border-b border-brand-700/50 pb-2 sm:pb-3 pt-1.5 sm:pt-2 gap-2"><div class="flex items-center gap-2 sm:gap-3 overflow-hidden min-w-[50%]"><span class="bg-brand-800 text-brand-yellow w-5 h-5 sm:w-6 sm:h-6 rounded flex items-center justify-center shrink-0">'+i.qtd+'x</span><span class="truncate break-words">'+escapeHTML(i.nome)+'</span></div><span class="text-white shrink-0 font-montserrat break-all">R$ '+formatarMoeda(i.preco*i.qtd).replace('R$','')+'</span></div>'; 
+            });
+            list.innerHTML = h;
+            document.getElementById('checkout-total-val').innerText = formatarMoeda(t);
+            
+            var sel = document.getElementById('checkout-loja');
+            if(sel) { sel.innerHTML = '<option value="">-- Selecione uma Loja --</option>' + (window.state.lojas||[]).map(function(l){ return '<option value="'+escapeHTML(l.nome)+'">'+escapeHTML(l.nome)+'</option>'; }).join(''); }
+            var dI = document.getElementById('checkout-data'); if(dI) dI.min = new Date().toISOString().split('T')[0];
+        }
+
+        function finalizarPedido() {
+            if(!window.state.cliente) { showToast("Faça Login para continuar", true); return navigate('perfil'); }
+            var loja = document.getElementById('checkout-loja').value, data = document.getElementById('checkout-data').value, hora = document.getElementById('checkout-hora').value;
+            var pgto = document.getElementById('checkout-pgto') ? document.getElementById('checkout-pgto').value : 'ND';
+            
+            if(!loja || !data || !hora) return showToast("Preencha Loja, Data e Hora.", true);
+            
+            var id = 'PED-' + Date.now().toString().slice(-4);
+            var m = '🚜 *NOVO PEDIDO ('+id+')* 🚜%0A%0A👤 *'+window.state.cliente.nome+'*%0A📱 '+window.state.cliente.zap+'%0A%0A*ITENS:*%0A';
+            var t = 0;
+            window.state.carrinho.forEach(function(i){ t += i.preco*i.qtd; m += '▪ '+i.qtd+'x '+i.nome+'%0A'; });
+            m += '%0A💰 *TOTAL: '+formatarMoeda(t)+'*%0A💳 Pgto: '+pgto+'%0A📍 Retirar: '+loja+'%0A⏰ Dia '+data.split('-').reverse().join('/')+' às '+hora;
+            
+            window.open('https://wa.me/'+(window.state.config.telefone.replace(/\D/g,''))+'?text='+m, '_blank');
+            window.state.carrinho = []; sincronizarStorage(); atualizarBadgeCarrinho(); navigate('vitrine'); showToast("Pedido Enviado!");
+        }
+
+        /* --- PERFIL --- */
+        function salvarPerfil() {
+            var e = document.getElementById('cli-email').value.trim(), n = document.getElementById('cli-nome').value.trim(), z = document.getElementById('cli-zap').value.trim();
+            if(!n || !z) return showToast("Nome e WhatsApp são obrigatórios.", true);
+            window.state.cliente = { email: e, nome: n, zap: z, foto: 'https://ui-avatars.com/api/?name='+encodeURIComponent(n)+'&background=16a34a&color=fff&font-size=0.33&bold=true' };
+            sincronizarStorage(); showToast("Conta Criada com Sucesso!"); atualizarUICliente(); 
+            if(window.state.carrinho.length > 0) { navigate('checkout'); }
+        }
+        function deslogarPerfil() { window.state.cliente = null; sincronizarStorage(); atualizarUICliente(); showToast("Você saiu da conta."); }
+        function atualizarUICliente() {
+            var s1 = document.getElementById('perfil-step-1'), s2 = document.getElementById('perfil-step-2'), ls = document.getElementById('perfil-logged-state');
+            if (window.state.cliente) {
+                if(document.getElementById('cli-email')) document.getElementById('cli-email').value = window.state.cliente.email || '';
+                if(document.getElementById('cli-nome')) document.getElementById('cli-nome').value = window.state.cliente.nome || '';
+                if(document.getElementById('cli-zap')) document.getElementById('cli-zap').value = window.state.cliente.zap || '';
+                
+                if(document.getElementById('logged-name')) document.getElementById('logged-name').innerText = window.state.cliente.nome;
+                if(document.getElementById('logged-zap')) document.getElementById('logged-zap').innerText = window.state.cliente.zap;
+                if(document.getElementById('avatar-logged')) document.getElementById('avatar-logged').src = window.state.cliente.foto;
+                
+                if(s1) s1.style.display='none'; if(s2) s2.style.display='none'; if(ls) ls.style.display='block';
+            } else {
+                if(s1) s1.style.display='block'; if(s2) s2.style.display='none'; if(ls) ls.style.display='none';
+            }
+        }
+
+        /* --- ERP ADMIN GESTÃO DE DADOS --- */
+        function efetuarLogin() {
+            if(document.getElementById('login-user').value==='admin' && document.getElementById('login-pass').value==='123') { window.state.isLogged = true; navigate('admin'); } else showToast("Acesso Negado.", true);
+        }
+        function efetuarLogout() { window.state.isLogged = false; navigate('vitrine'); }
+        
+        function abrirAbaAdmin(aba) {
+            document.querySelectorAll('.aba-conteudo').forEach(function(el){ el.style.display = 'none'; }); 
+            document.querySelectorAll('.erp-nav-btn').forEach(function(btn){ btn.classList.remove('bg-white', 'text-brand-500', 'shadow-sm'); });
+            var aEl = document.getElementById('aba-'+aba), tEl = document.getElementById('tab-'+aba);
+            if (aEl) aEl.style.display = 'block'; 
+            if (tEl) { tEl.classList.add('bg-white', 'text-brand-500', 'shadow-sm'); }
+            
+            if(aba === 'dashboard') renderERP_Dashboard(); 
+            else if(aba === 'pdv') renderERP_PDV(); 
+            else if(aba === 'produtos') renderERP_Produtos(); 
+            else if(aba === 'lojas') renderERP_Lojas(); 
+            else if(aba === 'depoimentos') renderERP_Depoimentos(); 
+            else if(aba === 'config') renderERP_Config();
+        }
+        
+        function renderERP_Dashboard() {
+            if(document.getElementById('kpi-receita')) document.getElementById('kpi-receita').innerText = formatarMoeda(window.state.vendas.reduce(function(a, v){ return a + v.total; }, 0)); 
+            if(document.getElementById('kpi-itens')) document.getElementById('kpi-itens').innerText = window.state.vendas.reduce(function(a, v){ return a + v.qtd; }, 0);
+            if(document.getElementById('kpi-custo-est')) document.getElementById('kpi-custo-est').innerText = formatarMoeda(window.state.produtos.reduce(function(a,p){ return a+(p.estoque * (p.precoCusto||0)); }, 0));
+            
+            var tb = document.getElementById('tabela-vendas'); if(tb) {
+                tb.innerHTML = window.state.vendas.length === 0 ? '<tr><td colspan="4" class="p-4 sm:p-8 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px] sm:text-xs">Aguardando Vendas</td></tr>' : window.state.vendas.slice(0,10).map(function(v){ return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition"><td class="p-3 sm:p-5 text-slate-500 text-[10px] sm:text-xs font-bold">'+v.data+'</td><td class="p-3 sm:p-5 font-bold text-slate-800 break-words max-w-[120px] sm:max-w-none">'+escapeHTML(v.produtoNome||v.nome)+'</td><td class="p-3 sm:p-5 font-black bg-slate-50 text-center rounded-lg">'+v.qtd+'</td><td class="p-3 sm:p-5 text-emerald-600 font-black font-montserrat break-all">'+formatarMoeda(v.total)+'</td></tr>'; }).join('');
+            }
+        }
+
+        /* ERP PRODUTOS */
+        async function cadastroExpresso() {
+            var n = document.getElementById('exp-nome').value, p = parseFloat(document.getElementById('exp-preco').value), e = parseInt(document.getElementById('exp-estoque').value), c = document.getElementById('exp-cat') ? document.getElementById('exp-cat').value : 'Todos';
+            if(!n || isNaN(p) || isNaN(e)) return showToast('Preencha Nome, Preço e Qtd', true);
+            var np = { id: Date.now(), nome: n, sku: 'AG'+Date.now().toString().slice(-4), preco: p, precoCusto: p*0.5, estoque: e, estoqueMinimo: 2, categoria: c, imagem: 'https://via.placeholder.com/400/F8FAFC/0F172A?text=Sem+Foto', descricao: '' };
+            showLoader(true);
+            var res = await API.post({ action: 'cadastrar_produto', ...np });
+            if (res && res.success) { if(res.data && res.data.id) np.id = res.data.id; showToast('Salvo (Nuvem)'); } else { showToast("Salvo Local"); }
+            window.state.produtos.unshift(np); sincronizarStorage(); showLoader(false); renderERP_Produtos();
+            document.getElementById('exp-nome').value = ''; document.getElementById('exp-preco').value = ''; document.getElementById('exp-estoque').value = '';
+        }
+
+        function abrirModalProduto(id) {
+            document.querySelectorAll('#erp-prod-modal-overlay input, #erp-prod-modal-overlay textarea').forEach(function(i){ i.value=''; }); 
+            document.getElementById('erp-preview-img').style.display='none';
+            document.getElementById('erp-preview-img').classList.add('hidden');
+
+            if(id) {
+                var p = window.state.produtos.find(function(x){ return String(x.id) === String(id); }); 
+                if(p) {
+                    document.getElementById('erp-modal-title').innerHTML = "<i class='fas fa-pen mr-2 text-brand-500'></i> Editar Produto";
+                    document.getElementById('erp-prod-id').value = p.id; document.getElementById('erp-prod-nome').value = p.nome; 
+                    document.getElementById('erp-prod-sku').value = p.sku || ''; document.getElementById('erp-prod-custo').value = p.precoCusto || ''; 
+                    document.getElementById('erp-prod-preco').value = p.preco; document.getElementById('erp-prod-estoque').value = p.estoque; 
+                    document.getElementById('erp-prod-min').value = p.estoqueMinimo || 2; document.getElementById('erp-prod-img-b64').value = p.imagem || ''; 
+                    document.getElementById('erp-prod-desc').value = p.descricao || '';
+                    if(document.getElementById('erp-prod-cat')) document.getElementById('erp-prod-cat').value = p.categoria || 'Todos';
+                    if(p.imagem) { 
+                        document.getElementById('erp-preview-img').src = p.imagem; 
+                        document.getElementById('erp-preview-img').style.display='block'; 
+                        document.getElementById('erp-preview-img').classList.remove('hidden');
+                    }
+                }
+            } else { document.getElementById('erp-modal-title').innerHTML = "<i class='fas fa-plus mr-2 text-brand-500'></i> Novo Produto"; document.getElementById('erp-prod-id').value = ''; }
+            var m = document.getElementById('erp-prod-modal-overlay');
+            m.style.display = 'flex';
+            setTimeout(function(){ m.classList.add('show'); }, 10);
+        }
+        function fecharModalProduto() { 
+            var m = document.getElementById('erp-prod-modal-overlay');
+            m.classList.remove('show');
+            setTimeout(function(){ m.style.display = 'none'; }, 300);
+        }
+        
+        async function salvarEdicaoProdutoERP() {
+            var id = document.getElementById('erp-prod-id').value, n = document.getElementById('erp-prod-nome').value, p = parseFloat(document.getElementById('erp-prod-preco').value);
+            if(!n || isNaN(p)) return showToast("Nome e Preço obrigatórios!", true);
+            var pData = { nome: n, sku: document.getElementById('erp-prod-sku').value || 'AG'+Date.now().toString().slice(-4), precoCusto: parseFloat(document.getElementById('erp-prod-custo').value||0), preco: p, categoria: document.getElementById('erp-prod-cat').value, estoque: parseInt(document.getElementById('erp-prod-estoque').value||0), estoqueMinimo: parseInt(document.getElementById('erp-prod-min').value||2), descricao: document.getElementById('erp-prod-desc').value, imagem: document.getElementById('erp-prod-img-b64').value || 'https://via.placeholder.com/400/F8FAFC/0F172A?text=Sem+Foto' };
+            showLoader(true);
+            if(id) { var idx = window.state.produtos.findIndex(function(x){ return String(x.id)===String(id); }); if (idx !== -1) window.state.produtos[idx] = Object.assign({}, window.state.produtos[idx], pData); showToast("Atualizado!"); } 
+            else { pData.id = Date.now(); await API.post({ action: 'cadastrar_produto', ...pData }); window.state.produtos.unshift(pData); showToast("Criado!"); }
+            sincronizarStorage(); showLoader(false); fecharModalProduto(); renderERP_Produtos();
+        }
+
+        function renderERP_Produtos() {
+            var tb = document.getElementById('tabela-estoque-admin'); if(!tb) return;
+            if(window.state.produtos.length === 0) { tb.innerHTML = '<tr><td colspan="6" class="p-4 sm:p-8 text-center text-slate-400 font-bold uppercase text-[10px] sm:text-xs tracking-widest">Catálogo Vazio</td></tr>'; return; }
+            var h = '';
+            window.state.produtos.forEach(function(p) {
+                var isBaixo = p.estoque <= (p.estoqueMinimo || 2);
+                var st = p.estoque > 0 ? '<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-lg font-black uppercase text-[9px] sm:text-[10px] '+(isBaixo?'bg-amber-100 text-amber-700':'')+'">'+p.estoque+' UN</span>' : '<span class="bg-red-100 text-red-700 px-2 sm:px-3 py-1 rounded-lg font-black uppercase text-[9px] sm:text-[10px]">ZERO</span>';
+                h += '<tr class="border-b border-slate-100 hover:bg-slate-50 transition"><td class="p-3 sm:p-4 flex items-center gap-2 sm:gap-4"><div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-slate-200 p-1 shrink-0"><img src="'+p.imagem+'" class="w-full h-full object-contain mix-blend-multiply"></div><div class="max-w-[120px] sm:max-w-[200px] break-words"><b class="text-slate-800 text-xs sm:text-sm leading-tight line-clamp-2">'+escapeHTML(p.nome)+'</b></div></td><td class="p-3 sm:p-4 text-slate-500 font-mono text-[9px] sm:text-[11px] bg-slate-100 rounded-lg">'+escapeHTML(p.sku)+'</td><td class="p-3 sm:p-4 font-montserrat font-black text-brand-500 break-all">'+formatarMoeda(p.preco)+'</td><td class="p-3 sm:p-4"><span class="bg-slate-200 text-slate-700 px-2 py-1 rounded text-[8px] sm:text-[9px] font-black uppercase break-words">'+escapeHTML(p.categoria)+'</span></td><td class="p-3 sm:p-4">'+st+'</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button class="btn-physical bg-blue-50 text-blue-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mr-1 sm:mr-2 hover:bg-blue-100" onclick="abrirModalProduto(\''+p.id+'\')"><i class="fas fa-pen text-[10px] sm:text-sm"></i></button><button class="btn-physical bg-red-50 text-red-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-red-100" onclick="apagarItemState(\'produtos\', \''+p.id+'\', renderERP_Produtos)"><i class="fas fa-trash text-[10px] sm:text-sm"></i></button></td></tr>';
+            });
+            tb.innerHTML = h;
+        }
+
+        /* --- ERP PDV --- */
+        function renderERP_PDV() { atualizarTabelaPDV(); }
+        function buscarProdutoPDV() {
+            var termo = document.getElementById('pdv-busca').value.trim().toLowerCase(); if(!termo) return;
+            var prod = window.state.produtos.find(function(p){ return (p.sku||'').toLowerCase()===termo || p.nome.toLowerCase().includes(termo); });
+            if(!prod) return showToast("Não encontrado", true); if(prod.estoque <= 0) return showToast("Sem estoque", true);
+            var item = window.state.pdvCart.find(function(i){ return String(i.id)===String(prod.id); });
+            if(item) { if(item.qtd < prod.estoque) item.qtd++; else showToast("Limite de estoque", true); } else { window.state.pdvCart.push(Object.assign({}, prod, {qtd: 1})); }
+            document.getElementById('pdv-busca').value = ''; atualizarTabelaPDV();
+        }
+        function removerItemPDV(id) { window.state.pdvCart = window.state.pdvCart.filter(function(i){ return String(i.id) !== String(id); }); atualizarTabelaPDV(); }
+        function atualizarTabelaPDV() {
+            var tb = document.getElementById('tabela-pdv-itens'); if(!tb) return; var tot = 0; var h = '';
+            if(window.state.pdvCart.length === 0) { tb.innerHTML = '<tr><td colspan="4" class="p-6 sm:p-10 text-center text-slate-400 font-bold uppercase tracking-widest text-[10px] sm:text-xs">Passe o Produto</td></tr>'; document.getElementById('pdv-total-valor').innerText = 'R$ 0,00'; return; }
+            window.state.pdvCart.forEach(function(i){ var sub = i.preco*i.qtd; tot += sub; h += '<tr class="border-b border-slate-200 bg-white"><td class="p-3 sm:p-4 font-bold text-slate-800 text-[10px] sm:text-xs uppercase break-words max-w-[120px] sm:max-w-none">'+escapeHTML(i.nome)+'</td><td class="p-3 sm:p-4 font-black"><span class="bg-slate-100 px-2 sm:px-3 py-1 rounded-lg">'+i.qtd+'</span></td><td class="p-3 sm:p-4 font-montserrat font-black text-brand-500 break-all">'+formatarMoeda(sub)+'</td><td class="p-3 sm:p-4 text-right"><button class="btn-physical bg-red-50 text-red-500 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-red-100" onclick="removerItemPDV(\''+i.id+'\')"><i class="fas fa-times text-[10px] sm:text-sm"></i></button></td></tr>'; });
+            tb.innerHTML = h; document.getElementById('pdv-total-valor').innerText = formatarMoeda(tot);
+        }
+        function limparPDV() { window.state.pdvCart = []; atualizarTabelaPDV(); }
+        async function finalizarVendaPDV() {
+            if(window.state.pdvCart.length === 0) return; showLoader(true); var tv = 0, ti = 0;
+            for (var i = 0; i < window.state.pdvCart.length; i++) {
+                var item = window.state.pdvCart[i]; var pReal = window.state.produtos.find(function(p){ return String(p.id)===String(item.id); });
+                if(pReal) { pReal.estoque -= item.qtd; await API.post({ action: 'registrar_venda', produtoId: item.id, produtoNome: item.nome, qtd: item.qtd, total: (item.preco*item.qtd), data: new Date().toLocaleString('pt-BR') }); }
+                tv += (item.preco * item.qtd); ti += item.qtd;
+            }
+            window.state.vendas.unshift({ id: Date.now(), data: new Date().toLocaleString('pt-BR'), nome: "Venda PDV", qtd: ti, total: tv });
+            sincronizarStorage(); showLoader(false); showToast("Venda Finalizada com Sucesso!"); limparPDV();
+        }
+
+        /* --- Lojas, Depo, Config & Helpers --- */
+        function renderERP_Lojas() {
+            var c = document.getElementById('lista-adm-lojas'); if(!c) return; var h='';
+            window.state.lojas.forEach(function(l){ h += '<div class="bg-white border-2 border-slate-200 p-4 sm:p-5 rounded-2xl flex justify-between items-center shadow-sm hover:border-slate-400 transition group flex-wrap gap-4"><div class="flex items-center gap-3 sm:gap-5 w-full sm:w-auto">'+(l.imagem?'<img src="'+l.imagem+'" class="w-14 h-14 sm:w-20 sm:h-20 rounded-xl object-cover border border-slate-100 shrink-0">':'')+'<div class="break-words w-full"><b class="text-slate-800 text-sm sm:text-lg tracking-tight uppercase">'+escapeHTML(l.nome)+'</b><br><small class="text-slate-500 font-bold mt-1 inline-block text-[10px] sm:text-xs">'+escapeHTML(l.endereco).replace(/\n/g, ', ')+'</small></div></div><div class="flex gap-2 w-full sm:w-auto justify-end"><button class="btn-physical bg-blue-50 text-blue-600 px-4 py-2 sm:py-3 rounded-xl hover:bg-blue-100" onclick="abrirModalLoja(\''+l.id+'\')"><i class="fas fa-pen"></i></button> <button class="btn-physical bg-red-50 text-red-500 px-4 py-2 sm:py-3 rounded-xl hover:bg-red-100" onclick="apagarItemState(\'lojas\', \''+l.id+'\', renderERP_Lojas)"><i class="fas fa-trash"></i></button></div></div>'; }); c.innerHTML = h;
+        }
+        function abrirModalLoja(id) { 
+            document.querySelectorAll('#erp-loja-modal-overlay input, #erp-loja-modal-overlay textarea').forEach(function(i){i.value=''}); 
+            document.getElementById('erp-preview-loja-img').style.display='none';
+            document.getElementById('erp-preview-loja-img').classList.add('hidden');
+            if(id){ 
+                var l = window.state.lojas.find(function(x){return String(x.id)===String(id)}); 
+                if(l){ 
+                    document.getElementById('erp-loja-id').value=l.id; document.getElementById('erp-loja-nome').value=l.nome; 
+                    document.getElementById('erp-loja-end').value=l.endereco; document.getElementById('erp-loja-img-b64').value=l.imagem||''; 
+                    if(l.imagem){ document.getElementById('erp-preview-loja-img').src=l.imagem; document.getElementById('erp-preview-loja-img').style.display='block'; document.getElementById('erp-preview-loja-img').classList.remove('hidden'); }
+                } 
+            } 
+            var m = document.getElementById('erp-loja-modal-overlay'); m.style.display='flex'; setTimeout(function(){ m.classList.add('show'); }, 10);
+        }
+        function fecharModalLoja() { var m = document.getElementById('erp-loja-modal-overlay'); m.classList.remove('show'); setTimeout(function(){ m.style.display='none'; }, 300); }
+        function salvarLojaERP() { var id = document.getElementById('erp-loja-id').value, n = document.getElementById('erp-loja-nome').value, e = document.getElementById('erp-loja-end').value; if(!n || !e) return showToast("Faltam dados!", true); var d = { nome: n, endereco: e, imagem: document.getElementById('erp-loja-img-b64').value }; if(id){ var ix = window.state.lojas.findIndex(function(x){return String(x.id)===String(id)}); window.state.lojas[ix]=Object.assign({}, window.state.lojas[ix], d); } else { d.id = Date.now(); window.state.lojas.push(d); } sincronizarStorage(); fecharModalLoja(); renderERP_Lojas(); showToast("Loja Salva!"); }
+
+        function renderERP_Depoimentos() {
+            var c = document.getElementById('lista-adm-deps'); if(!c) return; var h='';
+            window.state.depoimentos.forEach(function(d){ h += '<div class="bg-white border-2 border-slate-200 p-4 sm:p-5 rounded-2xl flex justify-between items-center shadow-sm hover:border-slate-400 transition flex-wrap gap-4"><div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto"><img src="'+d.foto+'" class="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-slate-100 shrink-0"><div class="break-words w-full"><b class="text-slate-800 font-black uppercase tracking-widest text-[9px] sm:text-[11px]">'+escapeHTML(d.nome)+'</b><br><small class="text-slate-500 font-bold italic mt-1 block text-[10px] sm:text-xs">"'+escapeHTML(d.texto).substring(0,40)+'..."</small></div></div><div class="flex gap-2 w-full sm:w-auto justify-end"><button class="btn-physical bg-blue-50 text-blue-600 px-4 py-2 sm:py-3 rounded-xl hover:bg-blue-100" onclick="abrirModalDepoimento(\''+d.id+'\')"><i class="fas fa-pen"></i></button> <button class="btn-physical bg-red-50 text-red-500 px-4 py-2 sm:py-3 rounded-xl hover:bg-red-100" onclick="apagarItemState(\'depoimentos\', \''+d.id+'\', renderERP_Depoimentos)"><i class="fas fa-trash"></i></button></div></div>'; }); c.innerHTML = h;
+        }
+        function abrirModalDepoimento(id) { 
+            document.querySelectorAll('#erp-dep-modal-overlay input, #erp-dep-modal-overlay textarea').forEach(function(i){i.value=''}); 
+            document.getElementById('erp-preview-dep-img').style.display='none';
+            document.getElementById('erp-preview-dep-img').classList.add('hidden');
+            if(id){ 
+                var d = window.state.depoimentos.find(function(x){return String(x.id)===String(id)}); 
+                if(d){ 
+                    document.getElementById('erp-dep-id').value=d.id; document.getElementById('erp-dep-nome').value=d.nome; 
+                    document.getElementById('erp-dep-texto').value=d.texto; document.getElementById('erp-dep-img-b64').value=d.foto||''; 
+                    if(d.foto){ document.getElementById('erp-preview-dep-img').src=d.foto; document.getElementById('erp-preview-dep-img').style.display='block'; document.getElementById('erp-preview-dep-img').classList.remove('hidden'); }
+                } 
+            } 
+            var m = document.getElementById('erp-dep-modal-overlay'); m.style.display='flex'; setTimeout(function(){ m.classList.add('show'); }, 10);
+        }
+        function fecharModalDepoimento() { var m = document.getElementById('erp-dep-modal-overlay'); m.classList.remove('show'); setTimeout(function(){ m.style.display='none'; }, 300); }
+        function salvarDepoimentoERP() { var id = document.getElementById('erp-dep-id').value, n = document.getElementById('erp-dep-nome').value, t = document.getElementById('erp-dep-texto').value; if(!n || !t) return showToast("Faltam dados!", true); var d = { nome: n, texto: t, foto: document.getElementById('erp-dep-img-b64').value||'https://ui-avatars.com/api/?name='+encodeURIComponent(n)+'&background=16a34a&color=fff&bold=true' }; if(id){ var ix = window.state.depoimentos.findIndex(function(x){return String(x.id)===String(id)}); window.state.depoimentos[ix]=Object.assign({}, window.state.depoimentos[ix], d); } else { d.id = Date.now(); window.state.depoimentos.unshift(d); } sincronizarStorage(); fecharModalDepoimento(); renderERP_Depoimentos(); showToast("Publicado!"); }
+
+        function renderERP_Config() {
+            var c = window.state.config; 
+            document.getElementById('cfg-gas-url').value = c.gasUrl || ''; 
+            document.getElementById('cfg-nome').value = c.nomeLoja || ''; 
+            document.getElementById('cfg-zap').value = c.telefone || ''; 
+            
+            document.getElementById('cfg-cor-pri').value = c.corPrimaria || '#16a34a';
+            document.getElementById('cfg-cor-sec').value = c.corSecundaria || '#facc15';
+            
+            document.getElementById('cfg-logo-b64').value = c.logoUrl || '';
+            if (c.logoUrl) {
+                document.getElementById('preview-logo').src = c.logoUrl;
+                document.getElementById('preview-logo').style.display = 'block';
+                document.getElementById('preview-logo').classList.remove('hidden');
+            } else {
+                document.getElementById('preview-logo').style.display = 'none';
+                document.getElementById('preview-logo').classList.add('hidden');
+            }
+
+            document.getElementById('cfg-topbar').value = c.topBar || ''; 
+            document.getElementById('cfg-about-title').value = c.aboutTitle || ''; 
+            document.getElementById('cfg-about-p1').value = c.aboutP1 || ''; 
+            document.getElementById('cfg-about-p2').value = c.aboutP2 || ''; 
+            
+            renderListaBannersAdmin();
+        }
+        function salvarConfiguracoesGlobais() {
+            var c = window.state.config; 
+            c.gasUrl = document.getElementById('cfg-gas-url').value; 
+            c.nomeLoja = document.getElementById('cfg-nome').value; 
+            c.telefone = document.getElementById('cfg-zap').value; 
+            c.corPrimaria = document.getElementById('cfg-cor-pri').value;
+            c.corSecundaria = document.getElementById('cfg-cor-sec').value;
+            c.logoUrl = document.getElementById('cfg-logo-b64').value;
+            c.topBar = document.getElementById('cfg-topbar').value; 
+            c.aboutTitle = document.getElementById('cfg-about-title').value; 
+            c.aboutP1 = document.getElementById('cfg-about-p1').value; 
+            c.aboutP2 = document.getElementById('cfg-about-p2').value; 
+            
+            sincronizarStorage(); aplicarTemaEConfiguracoes(); showToast("Configurações Guardadas!");
+        }
+
+        function removerLogo() {
+            document.getElementById('cfg-logo-b64').value = '';
+            document.getElementById('preview-logo').style.display = 'none';
+            document.getElementById('preview-logo').classList.add('hidden');
+            window.state.config.logoUrl = '';
+            sincronizarStorage(); aplicarTemaEConfiguracoes(); showToast("Logotipo Removido!");
+        }
+
+        function renderListaBannersAdmin() {
+            var c = document.getElementById('lista-adm-banners'); if(!c) return; var h='';
+            window.state.config.banners.forEach(function(b, i){ h += '<div class="bg-white border-2 border-slate-200 p-4 sm:p-5 rounded-2xl flex justify-between items-center shadow-sm hover:border-slate-400 transition flex-wrap gap-3"><div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto"><img src="'+b.img+'" class="w-16 h-10 sm:w-24 sm:h-14 object-cover rounded-lg sm:rounded-xl border border-slate-200 shrink-0"><div class="break-words w-full"><b class="text-slate-800 text-[10px] sm:text-xs font-black uppercase tracking-widest block mb-1">'+escapeHTML(b.title)+'</b><span class="text-[9px] sm:text-[10px] text-slate-400 font-bold">'+escapeHTML(b.text).substring(0,25)+'...</span></div></div><div class="flex gap-2 w-full sm:w-auto justify-end"><button class="btn-physical bg-blue-50 text-blue-600 px-4 py-2 sm:py-3 rounded-xl hover:bg-blue-100" onclick="abrirModalBanner('+i+')"><i class="fas fa-pen"></i></button><button class="btn-physical bg-red-50 text-red-500 px-4 py-2 sm:py-3 rounded-xl hover:bg-red-100" onclick="apagarBanner('+i+')"><i class="fas fa-trash"></i></button></div></div>'; }); c.innerHTML = h;
+        }
+        function abrirModalBanner(idx) { 
+            document.querySelectorAll('#erp-banner-modal-overlay input').forEach(function(i){i.value=''}); 
+            document.getElementById('erp-preview-banner-img').style.display='none';
+            document.getElementById('erp-preview-banner-img').classList.add('hidden');
+            if(idx!=null){ 
+                var b = window.state.config.banners[idx]; 
+                if(b){ 
+                    document.getElementById('erp-banner-id').value=idx; document.getElementById('erp-banner-title').value=b.title; 
+                    document.getElementById('erp-banner-text').value=b.text; document.getElementById('erp-banner-img-b64').value=b.img; 
+                    if(b.img) { document.getElementById('erp-preview-banner-img').src=b.img; document.getElementById('erp-preview-banner-img').style.display='block'; document.getElementById('erp-preview-banner-img').classList.remove('hidden'); }
+                } 
+            } 
+            var m = document.getElementById('erp-banner-modal-overlay'); m.style.display='flex'; setTimeout(function(){ m.classList.add('show'); }, 10);
+        }
+        function fecharModalBanner() { var m = document.getElementById('erp-banner-modal-overlay'); m.classList.remove('show'); setTimeout(function(){ m.style.display='none'; }, 300); }
+        function salvarBannerERP() { var idx = document.getElementById('erp-banner-id').value, b = { title: document.getElementById('erp-banner-title').value, text: document.getElementById('erp-banner-text').value, img: document.getElementById('erp-banner-img-b64').value }; if(!b.img) return showToast("Imagem Obrigatória!", true); if(idx!=='') window.state.config.banners[parseInt(idx)] = b; else window.state.config.banners.push(b); sincronizarStorage(); aplicarTemaEConfiguracoes(); fecharModalBanner(); renderListaBannersAdmin(); showToast("Banner Salvo!"); }
+
+        function apagarItemState(col, id, cb) { if(confirm("Remover este item para sempre?")) { window.state[col] = window.state[col].filter(function(i){return String(i.id)!=String(id)}); sincronizarStorage(); cb(); showToast("Removido."); } }
+        function apagarBanner(idx) { if(confirm("Remover este banner?")) { window.state.config.banners.splice(idx, 1); sincronizarStorage(); aplicarTemaEConfiguracoes(); renderListaBannersAdmin(); showToast("Removido."); } }
+
+    </script>
+</body>
+</html>
