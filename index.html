@@ -7,14 +7,26 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#064E3B">
     
+    <!-- Ícone da Aba do Navegador (Favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚜</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚜</text></svg>">
+
     <!-- Meta Tags para Redes Sociais -->
     <meta name="description" content="Tudo para o homem do campo e para o seu pet! Rações, ferramentas, moda country e muito mais.">
     
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Sua Logo AgroPet | Tradição no Campo e Cuidado com seu Pet">
     <meta property="og:description" content="A maior variedade para o produtor rural e animais de estimação. Compre online com total segurança.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80">
     <meta property="og:site_name" content="Sua Logo AgroPet">
     <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sua Logo AgroPet | Tradição no Campo e Cuidado com seu Pet">
+    <meta name="twitter:description" content="A maior variedade para o produtor rural e animais de estimação. Compre online com total segurança.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80">
     
     <!-- Preconnects & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +59,8 @@
                     boxShadow: {
                         'hard': '4px 4px 0px 0px rgba(6, 78, 59, 1)',
                         'hard-sm': '2px 2px 0px 0px rgba(6, 78, 59, 1)',
-                        'hard-hover': '0px 0px 0px 0px rgba(6, 78, 59, 1)'
+                        'hard-hover': '0px 0px 0px 0px rgba(6, 78, 59, 1)',
+                        'float': '0 10px 40px -10px rgba(0,0,0,0.15)'
                     }
                 }
             }
@@ -283,7 +296,7 @@
                     </div>
                 </div>
                 
-                <div id="grid-produtos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"></div>
+                <div id="grid-produtos" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"></div>
                 
                 <div id="msg-sem-produto" style="display:none; text-align:center; padding: 3rem 1rem sm:padding: 5rem 2rem; background: #FFF; border: 2px dashed var(--border-light); border-radius: 16px; margin-top: 1rem sm:margin-top: 2rem;">
                     <i class="fas fa-box-open text-4xl sm:text-5xl text-slate-300 mb-3 sm:mb-4"></i>
@@ -946,39 +959,39 @@
         }
 
         window.onload = async function() {
-            var VERSION = "v2_agropet_modern"; 
+            var VERSION = "v3_agropet_fixed_images"; 
             if(localStorage.getItem('agropet_version') !== VERSION) {
                 
                 // --- NOVOS PRODUTOS AGROPET ---
                 window.state.produtos = [
                     // Pet Shop
-                    { id: 1, sku: "PET-01", nome: "Ração Golden Especial Cães Adultos 15kg", categoria: "Pet Shop", precoCusto: 95, preco: 145.90, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&h=400&fit=crop", descricao: "Alimento Premium Especial. Ingredientes de alta qualidade, garantindo maior digestibilidade e pelos mais bonitos." },
-                    { id: 2, sku: "PET-02", nome: "Coleira Antipulgas e Carrapatos Seresto", categoria: "Pet Shop", precoCusto: 120, preco: 219.00, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=600&h=400&fit=crop", descricao: "Proteção contínua por até 8 meses contra pulgas, carrapatos e doenças transmissíveis." },
-                    { id: 3, sku: "PET-03", nome: "Shampoo Neutro Pet Clean 500ml", categoria: "Pet Shop", precoCusto: 12, preco: 24.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1583337260546-28b6bf66d004?w=600&h=400&fit=crop", descricao: "Limpeza profunda sem agredir a pele do seu cão ou gato. Cheirinho de banho tomado que dura." },
-                    { id: 4, sku: "PET-04", nome: "Areia Sanitária Pipicat 4kg", categoria: "Pet Shop", precoCusto: 8, preco: 16.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&h=400&fit=crop", descricao: "Alto poder de absorção e controle de odores para o banheiro do seu felino." },
+                    { id: 1, sku: "PET-01", nome: "Ração Golden Especial Cães Adultos 15kg", categoria: "Pet Shop", precoCusto: 95, preco: 145.90, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1589924691995-400dc9ce5ce1?auto=format&fit=crop&w=600&q=80", descricao: "Alimento Premium Especial. Ingredientes de alta qualidade, garantindo maior digestibilidade e pelos mais bonitos." },
+                    { id: 2, sku: "PET-02", nome: "Coleira Antipulgas e Carrapatos Seresto", categoria: "Pet Shop", precoCusto: 120, preco: 219.00, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80", descricao: "Proteção contínua por até 8 meses contra pulgas, carrapatos e doenças transmissíveis." },
+                    { id: 3, sku: "PET-03", nome: "Shampoo Neutro Pet Clean 500ml", categoria: "Pet Shop", precoCusto: 12, preco: 24.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1583337260546-28b6bf66d004?auto=format&fit=crop&w=600&q=80", descricao: "Limpeza profunda sem agredir a pele do seu cão ou gato. Cheirinho de banho tomado que dura." },
+                    { id: 4, sku: "PET-04", nome: "Areia Sanitária Pipicat 4kg", categoria: "Pet Shop", precoCusto: 8, preco: 16.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80", descricao: "Alto poder de absorção e controle de odores para o banheiro do seu felino." },
                     // Agropecuária
-                    { id: 5, sku: "AGR-01", nome: "Pulverizador Costal Agrícola Jacto 20L", categoria: "Agropecuária", precoCusto: 180, preco: 299.90, estoque: 8, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1592982537447-6f2a6a0a3000?w=600&h=400&fit=crop", descricao: "Resistência e durabilidade para aplicação de defensivos e fertilizantes na sua lavoura." },
-                    { id: 6, sku: "AGR-02", nome: "Arame Farpado Motto 500m Belgo", categoria: "Agropecuária", precoCusto: 280, preco: 420.00, estoque: 12, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1558234399-5ea0751b3d88?w=600&h=400&fit=crop", descricao: "Alta resistência ao impacto e durabilidade contra ferrugem para cercar sua propriedade." },
-                    { id: 7, sku: "AGR-03", nome: "Carrinho de Mão Extra Forte Pneu Maciço", categoria: "Agropecuária", precoCusto: 150, preco: 249.90, estoque: 6, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1582226223573-455f750b3f88?w=600&h=400&fit=crop", descricao: "Agüenta o tranco no sítio ou na obra. Caçamba reforçada e pneu que não fura." },
-                    { id: 8, sku: "AGR-04", nome: "Sal Mineral Tortuga Cria e Recria 30kg", categoria: "Agropecuária", precoCusto: 90, preco: 145.00, estoque: 20, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1594498653385-d5172c532c00?w=600&h=400&fit=crop", descricao: "Suplementação mineral de excelência para aumento de peso e saúde do seu rebanho bovino." },
+                    { id: 5, sku: "AGR-01", nome: "Pulverizador Costal Agrícola Jacto 20L", categoria: "Agropecuária", precoCusto: 180, preco: 299.90, estoque: 8, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=600&q=80", descricao: "Resistência e durabilidade para aplicação de defensivos e fertilizantes na sua lavoura." },
+                    { id: 6, sku: "AGR-02", nome: "Arame Farpado Motto 500m Belgo", categoria: "Agropecuária", precoCusto: 280, preco: 420.00, estoque: 12, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?auto=format&fit=crop&w=600&q=80", descricao: "Alta resistência ao impacto e durabilidade contra ferrugem para cercar sua propriedade." },
+                    { id: 7, sku: "AGR-03", nome: "Carrinho de Mão Extra Forte Pneu Maciço", categoria: "Agropecuária", precoCusto: 150, preco: 249.90, estoque: 6, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1416879598555-31ba511ab1ec?auto=format&fit=crop&w=600&q=80", descricao: "Agüenta o tranco no sítio ou na obra. Caçamba reforçada e pneu que não fura." },
+                    { id: 8, sku: "AGR-04", nome: "Sal Mineral Tortuga Cria e Recria 30kg", categoria: "Agropecuária", precoCusto: 90, preco: 145.00, estoque: 20, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80", descricao: "Suplementação mineral de excelência para aumento de peso e saúde do seu rebanho bovino." },
                     // Moda Country
-                    { id: 9, sku: "CTY-01", nome: "Bota Texana Masculina Couro Legítimo", categoria: "Moda Country", precoCusto: 150, preco: 289.90, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?w=600&h=400&fit=crop", descricao: "Estilo e resistência para o dia a dia no campo ou para o rodeio." },
-                    { id: 10, sku: "CTY-02", nome: "Chapéu de Palha Karandá", categoria: "Moda Country", precoCusto: 40, preco: 89.90, estoque: 30, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1586221589578-83b63cc3bbcb?w=600&h=400&fit=crop", descricao: "Tradição pantaneira com proteção solar máxima pro seu trabalho sob o sol." },
-                    { id: 11, sku: "CTY-03", nome: "Cinto de Couro com Fivela Peão", categoria: "Moda Country", precoCusto: 45, preco: 95.00, estoque: 20, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1624898144078-68f7ec7eb2e3?w=600&h=400&fit=crop", descricao: "Acabamento rústico, fivela robusta e couro de boi 100% autêntico." },
+                    { id: 9, sku: "CTY-01", nome: "Bota Texana Masculina Couro Legítimo", categoria: "Moda Country", precoCusto: 150, preco: 289.90, estoque: 15, estoqueMinimo: 3, imagem: "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?auto=format&fit=crop&w=600&q=80", descricao: "Estilo e resistência para o dia a dia no campo ou para o rodeio." },
+                    { id: 10, sku: "CTY-02", nome: "Chapéu de Palha Karandá", categoria: "Moda Country", precoCusto: 40, preco: 89.90, estoque: 30, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=80", descricao: "Tradição pantaneira com proteção solar máxima pro seu trabalho sob o sol." },
+                    { id: 11, sku: "CTY-03", nome: "Cinto de Couro com Fivela Peão", categoria: "Moda Country", precoCusto: 45, preco: 95.00, estoque: 20, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80", descricao: "Acabamento rústico, fivela robusta e couro de boi 100% autêntico." },
                     // Equinos
-                    { id: 12, sku: "EQU-01", nome: "Ração Supra Especial Cavalos 30kg", categoria: "Equinos", precoCusto: 75, preco: 115.00, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1553641253-8321045fbc5b?w=600&h=400&fit=crop", descricao: "Energia e força para equinos de trabalho e passeio. Altamente palatável." },
-                    { id: 13, sku: "EQU-02", nome: "Sela Australiana Completa Couro", categoria: "Equinos", precoCusto: 450, preco: 790.00, estoque: 3, estoqueMinimo: 1, imagem: "https://images.unsplash.com/photo-1534440059887-19077de4a406?w=600&h=400&fit=crop", descricao: "Conforto para o cavaleiro e para o animal. Acompanha loro, estribo, barrigueira e cabeçada." },
-                    { id: 14, sku: "EQU-03", nome: "Mata Bicheira Prata Spray 500ml", categoria: "Equinos", precoCusto: 18, preco: 35.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1628186835269-e7d6929e798e?w=600&h=400&fit=crop", descricao: "Cicatrizante e repelente potente. Essencial na farmácia da sua propriedade." },
+                    { id: 12, sku: "EQU-01", nome: "Ração Supra Especial Cavalos 30kg", categoria: "Equinos", precoCusto: 75, preco: 115.00, estoque: 25, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=600&q=80", descricao: "Energia e força para equinos de trabalho e passeio. Altamente palatável." },
+                    { id: 13, sku: "EQU-02", nome: "Sela Australiana Completa Couro", categoria: "Equinos", precoCusto: 450, preco: 790.00, estoque: 3, estoqueMinimo: 1, imagem: "https://images.unsplash.com/photo-1512144572235-93bb9210cb1e?auto=format&fit=crop&w=600&q=80", descricao: "Conforto para o cavaleiro e para o animal. Acompanha loro, estribo, barrigueira e cabeçada." },
+                    { id: 14, sku: "EQU-03", nome: "Mata Bicheira Prata Spray 500ml", categoria: "Equinos", precoCusto: 18, preco: 35.90, estoque: 40, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80", descricao: "Cicatrizante e repelente potente. Essencial na farmácia da sua propriedade." },
                     // Jardinagem
-                    { id: 15, sku: "JAR-01", nome: "Tesoura de Poda Profissional Tramontina", categoria: "Jardinagem", precoCusto: 35, preco: 69.90, estoque: 18, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1416879598555-31ba511ab1ec?w=600&h=400&fit=crop", descricao: "Corte preciso e fácil. Lâmina em aço carbono perfeita para flores e galhos finos." },
-                    { id: 16, sku: "JAR-02", nome: "Kit de Jardinagem 3 Peças (Pá, Ancinho)", categoria: "Jardinagem", precoCusto: 20, preco: 45.00, estoque: 22, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=600&h=400&fit=crop", descricao: "O básico indispensável para manter seus vasos e pequenos canteiros lindos." },
-                    { id: 17, sku: "JAR-03", nome: "Adubo NPK 10-10-10 Saco 1kg", categoria: "Jardinagem", precoCusto: 8, preco: 18.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1592424040940-272e008cc91b?w=600&h=400&fit=crop", descricao: "Fórmula equilibrada para crescimento saudável e floração vibrante em qualquer tipo de planta." },
-                    { id: 18, sku: "JAR-04", nome: "Mangueira de Jardim Flexível 20 metros", categoria: "Jardinagem", precoCusto: 45, preco: 89.90, estoque: 10, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1585837920389-4cc3866ce965?w=600&h=400&fit=crop", descricao: "Acompanha esguicho e conectores. Não torce e não resseca no sol." }
+                    { id: 15, sku: "JAR-01", nome: "Tesoura de Poda Profissional Tramontina", categoria: "Jardinagem", precoCusto: 35, preco: 69.90, estoque: 18, estoqueMinimo: 4, imagem: "https://images.unsplash.com/photo-1592424001806-65bf4ff274fb?auto=format&fit=crop&w=600&q=80", descricao: "Corte preciso e fácil. Lâmina em aço carbono perfeita para flores e galhos finos." },
+                    { id: 16, sku: "JAR-02", nome: "Kit de Jardinagem 3 Peças (Pá, Ancinho)", categoria: "Jardinagem", precoCusto: 20, preco: 45.00, estoque: 22, estoqueMinimo: 5, imagem: "https://images.unsplash.com/photo-1416879598555-31ba511ab1ec?auto=format&fit=crop&w=600&q=80", descricao: "O básico indispensável para manter seus vasos e pequenos canteiros lindos." },
+                    { id: 17, sku: "JAR-03", nome: "Adubo NPK 10-10-10 Saco 1kg", categoria: "Jardinagem", precoCusto: 8, preco: 18.90, estoque: 50, estoqueMinimo: 10, imagem: "https://images.unsplash.com/photo-1574686001309-847e30d1ffcb?auto=format&fit=crop&w=600&q=80", descricao: "Fórmula equilibrada para crescimento saudável e floração vibrante em qualquer tipo de planta." },
+                    { id: 18, sku: "JAR-04", nome: "Mangueira de Jardim Flexível 20 metros", categoria: "Jardinagem", precoCusto: 45, preco: 89.90, estoque: 10, estoqueMinimo: 2, imagem: "https://images.unsplash.com/photo-1605051662580-c11cc2e37976?auto=format&fit=crop&w=600&q=80", descricao: "Acompanha esguicho e conectores. Não torce e não resseca no sol." }
                 ];
                 
                 window.state.lojas = [ 
-                    {id: 1, nome: "Matriz Centro", endereco: "Rua do Comércio Agrícola, 100\nCentro - Sua Cidade", imagem: "https://images.unsplash.com/photo-1592495914619-3db631a0e054?auto=format&fit=crop&w=600"},
-                    {id: 2, nome: "Filial Beira-Rio (Rações)", endereco: "Av. dos Produtores, 500\nBairro Rural - Sua Cidade", imagem: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=600"}
+                    {id: 1, nome: "Matriz Centro", endereco: "Rua do Comércio Agrícola, 100\nCentro - Sua Cidade", imagem: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=600&q=80"},
+                    {id: 2, nome: "Filial Beira-Rio (Rações)", endereco: "Av. dos Produtores, 500\nBairro Rural - Sua Cidade", imagem: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=600&q=80"}
                 ];
                 
                 window.state.depoimentos = [ 
@@ -989,9 +1002,9 @@
                 ];
                 
                 window.state.config.banners = [ 
-                    { img: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&w=1200", title: "O MELHOR PRO SEU PET", text: "Rações premium, medicamentos e acessórios." },
-                    { img: "https://images.unsplash.com/photo-1592982537447-6f2a6a0a3000?auto=format&fit=crop&w=1200", title: "FORÇA NO CAMPO", text: "Insumos e ferramentas de quem entende de trabalho pesado." },
-                    { img: "https://images.unsplash.com/photo-1594498653385-d5172c532c00?auto=format&fit=crop&w=1200", title: "SAÚDE ANIMAL", text: "Suplementos e vacinas para seu rebanho e equinos." }
+                    { img: "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1200&q=80", title: "O MELHOR PRO SEU PET", text: "Rações premium, medicamentos e acessórios." },
+                    { img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80", title: "FORÇA NO CAMPO", text: "Insumos e ferramentas de quem entende de trabalho pesado." },
+                    { img: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=1200&q=80", title: "SAÚDE ANIMAL", text: "Suplementos e vacinas para seu rebanho e equinos." }
                 ];
                 
                 localStorage.setItem('agropet_version', VERSION);
@@ -1158,8 +1171,8 @@
                     
                     var delay = Math.min(index * 0.05, 0.8);
 
-                    // Design atualizado: Card Moderno preenchendo a imagem superior
-                    h += '<div class="stagger-item bg-white rounded-[20px] sm:rounded-[28px] overflow-visible shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-2 border-slate-100 flex flex-col cursor-pointer group relative '+(isDisp?'':'opacity-70 grayscale-[30%]')+'" style="animation-delay: '+delay+'s;" onclick="abrirProduto(\''+p.id+'\')">' +
+                    // Design atualizado: Card Moderno preenchendo a imagem superior (com flutuação extra)
+                    h += '<div class="stagger-item bg-white rounded-[20px] sm:rounded-[28px] overflow-visible shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1.5 transition-all duration-300 border-2 border-slate-100 flex flex-col cursor-pointer group relative '+(isDisp?'':'opacity-70 grayscale-[30%]')+'" style="animation-delay: '+delay+'s;" onclick="abrirProduto(\''+p.id+'\')">' +
                             '<div class="relative h-36 sm:h-48 overflow-hidden bg-slate-50 rounded-t-[18px] sm:rounded-t-[26px]">' +
                                 '<div class="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">' + badge + '</div>' +
                                 '<img src="'+p.imagem+'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">' + 
@@ -1232,9 +1245,9 @@
             var c = document.getElementById('container-produto');
             if (c) {
                 c.innerHTML = '<div class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-brand-50 rounded-full blur-3xl -z-0 opacity-50 translate-x-1/2 -translate-y-1/2"></div>' +
-                              '<div class="w-full md:w-1/2 bg-slate-50 rounded-2xl sm:rounded-3xl flex items-center justify-center p-4 sm:p-8 border-2 border-slate-200 relative z-10">' +
-                                (isDisp ? '' : '<span class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black uppercase shadow-md">Esgotado</span>') +
-                                '<img src="'+p.imagem+'" class="w-full max-w-[250px] sm:max-w-[350px] md:max-w-[450px] mx-auto object-contain mix-blend-multiply '+(isDisp?'':'opacity-50 grayscale')+' transform hover:scale-105 transition-transform duration-500">' +
+                              '<div class="w-full md:w-1/2 bg-slate-50 rounded-2xl sm:rounded-3xl flex items-center justify-center p-4 sm:p-8 border-2 border-slate-200 relative z-10 overflow-hidden">' +
+                                (isDisp ? '' : '<span class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black uppercase shadow-md z-20">Esgotado</span>') +
+                                '<img src="'+p.imagem+'" class="w-full h-[300px] sm:h-[400px] object-cover rounded-xl shadow-sm transform hover:scale-105 transition-transform duration-500 '+(isDisp?'':'opacity-50 grayscale')+'">' +
                               '</div>' +
                               '<div class="w-full md:w-1/2 flex flex-col relative z-10">' +
                                 '<span class="bg-brand-900 text-white px-3 py-1 sm:px-4 sm:py-1.5 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-black uppercase tracking-widest w-max mb-4 sm:mb-5 shadow-sm break-words">'+escapeHTML(p.categoria||'Catálogo')+'</span>' +
@@ -1299,7 +1312,7 @@
             window.state.carrinho.forEach(function(i) {
                 t += i.preco * i.qtd;
                 h += '<div class="flex gap-3 sm:gap-4 bg-white p-3 sm:p-4 rounded-2xl border border-slate-200 shadow-sm items-center relative hover:shadow-md transition-shadow">' +
-                        '<div class="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50 rounded-xl flex-shrink-0 p-1.5 sm:p-2 border border-slate-100"><img src="'+i.imagem+'" class="w-full h-full object-contain mix-blend-multiply"></div>' +
+                        '<div class="w-16 h-16 sm:w-20 sm:h-20 bg-slate-50 rounded-xl flex-shrink-0 border border-slate-100 overflow-hidden"><img src="'+i.imagem+'" class="w-full h-full object-cover"></div>' +
                         '<div class="flex-grow pr-6 sm:pr-8 overflow-hidden">' +
                             '<h4 class="font-bold text-slate-800 text-[10px] sm:text-xs uppercase leading-tight mb-1 sm:mb-2 line-clamp-2 pr-2 sm:pr-4 break-words">'+escapeHTML(i.nome)+'</h4>' +
                             '<div class="font-montserrat font-black text-brand-500 text-sm sm:text-lg mb-2 sm:mb-3 break-all">R$ '+formatarMoeda(i.preco).replace('R$','')+'</div>' +
@@ -1475,7 +1488,7 @@
             window.state.produtos.forEach(function(p) {
                 var isBaixo = p.estoque <= (p.estoqueMinimo || 2);
                 var st = p.estoque > 0 ? '<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-lg font-black uppercase text-[9px] sm:text-[10px] '+(isBaixo?'bg-amber-100 text-amber-700':'')+'">'+p.estoque+' UN</span>' : '<span class="bg-red-100 text-red-700 px-2 sm:px-3 py-1 rounded-lg font-black uppercase text-[9px] sm:text-[10px]">ZERO</span>';
-                h += '<tr class="border-b border-slate-100 hover:bg-slate-50 transition"><td class="p-3 sm:p-4 flex items-center gap-2 sm:gap-4"><div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-slate-200 p-1 shrink-0"><img src="'+p.imagem+'" class="w-full h-full object-contain mix-blend-multiply"></div><div class="max-w-[120px] sm:max-w-[200px] break-words"><b class="text-slate-800 text-xs sm:text-sm leading-tight line-clamp-2">'+escapeHTML(p.nome)+'</b></div></td><td class="p-3 sm:p-4 text-slate-500 font-mono text-[9px] sm:text-[11px] bg-slate-100 rounded-lg">'+escapeHTML(p.sku)+'</td><td class="p-3 sm:p-4 font-montserrat font-black text-brand-500 break-all">'+formatarMoeda(p.preco)+'</td><td class="p-3 sm:p-4"><span class="bg-slate-200 text-slate-700 px-2 py-1 rounded text-[8px] sm:text-[9px] font-black uppercase break-words">'+escapeHTML(p.categoria)+'</span></td><td class="p-3 sm:p-4">'+st+'</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button class="btn-physical bg-blue-50 text-blue-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mr-1 sm:mr-2 hover:bg-blue-100" onclick="abrirModalProduto(\''+p.id+'\')"><i class="fas fa-pen text-[10px] sm:text-sm"></i></button><button class="btn-physical bg-red-50 text-red-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-red-100" onclick="apagarItemState(\'produtos\', \''+p.id+'\', renderERP_Produtos)"><i class="fas fa-trash text-[10px] sm:text-sm"></i></button></td></tr>';
+                h += '<tr class="border-b border-slate-100 hover:bg-slate-50 transition"><td class="p-3 sm:p-4 flex items-center gap-2 sm:gap-4"><div class="w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-white border border-slate-200 p-1 shrink-0"><img src="'+p.imagem+'" class="w-full h-full object-cover"></div><div class="max-w-[120px] sm:max-w-[200px] break-words"><b class="text-slate-800 text-xs sm:text-sm leading-tight line-clamp-2">'+escapeHTML(p.nome)+'</b></div></td><td class="p-3 sm:p-4 text-slate-500 font-mono text-[9px] sm:text-[11px] bg-slate-100 rounded-lg">'+escapeHTML(p.sku)+'</td><td class="p-3 sm:p-4 font-montserrat font-black text-brand-500 break-all">'+formatarMoeda(p.preco)+'</td><td class="p-3 sm:p-4"><span class="bg-slate-200 text-slate-700 px-2 py-1 rounded text-[8px] sm:text-[9px] font-black uppercase break-words">'+escapeHTML(p.categoria)+'</span></td><td class="p-3 sm:p-4">'+st+'</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button class="btn-physical bg-blue-50 text-blue-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg mr-1 sm:mr-2 hover:bg-blue-100" onclick="abrirModalProduto(\''+p.id+'\')"><i class="fas fa-pen text-[10px] sm:text-sm"></i></button><button class="btn-physical bg-red-50 text-red-600 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-red-100" onclick="apagarItemState(\'produtos\', \''+p.id+'\', renderERP_Produtos)"><i class="fas fa-trash text-[10px] sm:text-sm"></i></button></td></tr>';
             });
             tb.innerHTML = h;
         }
